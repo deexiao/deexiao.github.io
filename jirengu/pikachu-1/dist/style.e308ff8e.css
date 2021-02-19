@@ -1,0 +1,199 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+input,
+button {
+  font-family: inherit;
+}
+ol,
+ul {
+  list-style: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.container,
+body,
+html {
+  width: 100%;
+  height: 100%;
+  background: #ffcb00;
+}
+
+.container {
+  /* 居中 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.skin {
+  position: relative;
+}
+
+.nose {
+  position: absolute;
+  /* 让圆形隐身 */
+  border: 14px solid transparent;
+  /* 取圆形的上面四分之一 */
+  border-top-color: #000;
+  /* 正方形变圆形 */
+  border-radius: 50%;
+  /* 为了竖向居中 往左移百分之五十 */
+  margin-left: -14px;
+}
+
+@keyframes wave {
+  0% {
+    transform: rotate(0deg);
+  }
+  33% {
+    transform: rotate(10deg);
+  }
+  66% {
+    transform: rotate(-10deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.nose:hover {
+  animation: wave 300ms infinite;
+}
+
+.eye {
+  border: 2px solid #000;
+  background: #303031;
+  width: 64px;
+  height: 64px;
+  top: -40px;
+  margin-left: -32px;
+  border-radius: 50%;
+  position: absolute;
+}
+
+/* 伪元素 */
+.eye::before {
+  /* 不给content就看不见了 */
+  content: "";
+  display: block;
+  border: 2px solid #000;
+  width: 26px;
+  height: 26px;
+  background: #fff;
+  border-radius: 50%;
+  position: relative;
+  left: 10px;
+}
+
+.eye.left {
+  /* 往左移 */
+  transform: translateX(-100px);
+}
+
+.eye.right {
+  /* 往右移 */
+  transform: translateX(100px);
+}
+
+.mouth {
+  position: absolute;
+
+  height: 150px;
+  width: 150px;
+  top: 45px;
+  margin-left: -75px;
+}
+
+/* 伪元素 */
+.mouth::after,
+.mouth::before {
+  position: absolute;
+
+  content: "";
+  width: 75px;
+  height: 38px;
+  border-bottom: 4px solid #000;
+
+  /* 把上面多出来的隐藏掉 */
+  background: #ffcb00;
+
+  z-index: 1;
+}
+
+.mouth::after {
+  border-left: 3px solid #000;
+  border-bottom-left-radius: 340px 180px;
+  left: -3px;
+  transform: rotate(-30deg);
+}
+
+.mouth::before {
+  border-right: 3px solid #000;
+  border-bottom-right-radius: 340px 180px;
+  right: -3px;
+  transform: rotate(30deg);
+}
+
+.mouth,
+.mouth_main {
+  position: absolute;
+  left: 50%;
+  right: 50%;
+}
+.mouth_main {
+  top: 15px;
+  width: 130px;
+  height: 140px;
+  background: #cc4143;
+  border: 3px solid #000;
+  border-bottom-left-radius: 280px 590px;
+  border-bottom-right-radius: 280px 590px;
+  overflow: hidden;
+  margin-left: -65px;
+}
+.tongue {
+  width: 140px;
+  height: 140px;
+  background: #dd666a;
+  margin-top: 20px;
+  margin-left: -10px;
+  margin-right: -10px;
+  border-top-left-radius: 380px;
+  border-top-right-radius: 380px;
+}
+
+.face {
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #ff5140;
+  border: 2px solid #000;
+  top: 85px;
+  left: 50%;
+  margin-left: -32px;
+}
+.face.left {
+  transform: translateX(-130px);
+}
+.face.right {
+  transform: translateX(130px);
+}
+
+
+/*# sourceMappingURL=/style.e308ff8e.css.map */

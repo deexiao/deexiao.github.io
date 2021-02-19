@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="utf-8" />
+</head>
+<title>TIE</title>
+<body background="bg.png">
+    <h1>TIE</h1>
+    <img src="demo.png" alt="demo" style="width:200px;height:220px;">
+    <br /><br />
+    <strong>数字 (eg: 1 2 3 4 5 [隔着空格] 可直接从 Excel 中复制然后粘贴到这里):<br /></strong> <input size="84" type="text" id="member" name="member" value="">    
+    <br /><br />
+    <strong>目标 (eg: 10):<br /></strong> <input size="15" type="text" id="tar" name="tar" value=""> 
+    <br /><br />
+    <input type="radio" id= "cantDup" name="gender" value="female" checked="checked"> 数字不可重复<br>
+    <input type="radio" id= "canDup" name="gender" value="male" > 数字可重复<br>
+    <br />
+    <a href="#" id="filldetails" onclick="addFields()">生成数据</a>
+
+    <div id="container"/>
+    <script type='text/javascript'>
+        function addFields(){
+            var string = document.getElementById("member").value;
+            string = string.split(" ");
+            var stringArray = new Array();
+            for(var i =0; i < string.length; i++){
+                if(string[i] != "") {
+                    stringArray.push(string[i].replace(/,/g, ''));
+                }
+                
+            }
+
+            var number = stringArray.length;
+            var container = document.getElementById("container");
+            while (container.hasChildNodes()) {
+                container.removeChild(container.lastChild);
+            }
+            container.appendChild(document.createElement("br"));
+
+            for (i=0;i<number;i++){
+                container.appendChild(document.createTextNode("数字 " + (i+1) + ": "));
+                var input = document.createElement("input");
+                input.type = "text";
+                input.name = "数字 " + i;
+                input.id = "number" + i;
+                input.text = stringArray[i];
+                container.appendChild(input);
+                container.appendChild(document.createElement("br"));
+
+                document.getElementById("number" + i).value = stringArray[i];
+
+            }
+            container.appendChild(document.createElement("br"));
+
+            var cal = document.createElement("a");
+            cal.onclick = function calculate() {
+                if(document.getElementById("canDup").checked) {
+                    console.log("canDup");
+                    var container = document.getElementById("container");
+
+                    var number = stringArray.length;
+                    var candidates = [];
+                    for (i=0;i<number;i++){
+                        candidates.push(document.getElementById('number'+i).value);
+                    }
+
+                    var target = document.getElementById("tar").value.replace(/,/g, '');
+
+                    var combinationSum = function(candidates, target) {
+                        if (!candidates || !candidates.length) {
+                            return []; 
+                        }   
+
+                        let result = []; 
+
+                        function dfs(candidates, tmpArr, remain, start) {
+                            if (remain < 0) {
+                                return;
+                            } else if (remain == 0) {
+                                result.push(tmpArr.slice());
+                                return;
+                            } else {
+                                for (let i = start; i < candidates.length; i++) {
+                                    tmpArr.push(candidates[i]);
+                                    dfs(candidates, tmpArr, remain - candidates[i], i); 
+                                    tmpArr.pop();
+                                }   
+                            }   
+                        }   
+
+                        dfs(candidates, [], target, 0); 
+
+                        return result;
+                    };
+                    console.log(combinationSum(candidates, target).length);
+
+                    for (i=0;i<combinationSum(candidates, target).length;i++){
+                        var label = document.createElement("textarea");
+                        label.id = "amlabel" + i;
+                        container.appendChild(label);
+                    }
+
+                    for (i=0;i<number;i++){
+                        document.getElementById('amlabel' + i).innerHTML = combinationSum(candidates, target)[i];
+                    }
+                } else {
+                    console.log("cantDup");
+                    var container = document.getElementById("container");
+
+                    var number = stringArray.length;
+                    var candidates = [];
+                    for (i=0;i<number;i++){
+                        candidates.push(document.getElementById('number'+i).value);
+                    }
+
+                    var target = document.getElementById("tar").value.replace(/,/g, '');
+
+                    console.log("target: "+target);
+                    console.log("candidates: "+candidates.toString());
+
+                    var combinationSum2 = function combinationSum2(candidates, target) {
+                        var res = []; // [][]
+                        var prefix = [];
+
+                        candidates.sort((a, b) => a - b);
+                        console.log("candidates: "+candidates.toString());
+
+                        search(0.00, target);
+                        return res;
+
+                        function search(idx, rest) {
+                            console.log("rest: "+rest);
+                            console.log(rest === 0);
+
+                            if (rest == 0 && idx === candidates.length) {
+                                console.log("prefix.slice(): "+prefix.slice());
+                                return res.push(prefix.slice());
+                            }
+
+                            if (rest < 0 || idx === candidates.length) {
+                            return;
+                            }
+
+                            // include number at idx
+                            prefix.push(candidates[idx]);
+                            search(idx + 1, (rest - candidates[idx]).toFixed(2));
+
+                            prefix.pop();
+                            if (prefix[prefix.length - 1] !== candidates[idx]) {
+                                search(idx + 1, rest);
+                            }
+                        }
+                    }
+                    console.log(combinationSum2(candidates, target).length);
+                    for (i=0;i<combinationSum2(candidates, target).length;i++){
+                        var label = document.createElement("textarea");
+                        label.id = "amlabel" + i;
+                        container.appendChild(label);
+                    }
+
+                    for (i=0;i<combinationSum2(candidates, target).length;i++){
+                        document.getElementById('amlabel' + i).innerHTML = combinationSum2(candidates, target)[i];
+                    }
+                }
+            };
+            cal.id = "filldetails";
+            cal.href = "#";
+            cal.text = "开始计算";
+
+            container.appendChild(cal);
+
+            container.appendChild(document.createElement("br"));
+            container.appendChild(document.createElement("br"));
+
+            // Append a line break 
+            container.appendChild(document.createElement("br"));
+        }
+    </script>
+</body>
+</html>
+
+
+<style>
+img, input {
+  border-radius: 8px;
+}
+</style>

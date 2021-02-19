@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        .container .jumbotron {
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <br />
+
+        <div class="jumbotron">
+            <h1 font: font>SeatsFinder</h1>
+            <p>
+                Monitoring seats for ASU classes so that you could stop refreshing the registration page. You'll get notified via email if the server detects any opening seats.
+            </p>
+            <p><a class="btn btn-outline-primary btn-lg" href="https://itunes.apple.com/us/app/seatsfinder/id1111929351?mt=8" role="button">Get the App</a></p>
+        </div>
+
+
+        <div class="jumbotron">
+            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="false">Register</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " id="pills-monitoring-tab" data-toggle="pill" href="#pills-monitoring" role="tab" aria-controls="pills-monitoring" aria-selected="true">Monitoring</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Add</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" id="pills-membership-tab" data-toggle="pill" href="#pills-membership" role="tab" aria-controls="pills-membership" aria-selected="false">Membership</a>
+                </li>
+
+                <li class="nav-item" hidden>
+                    <a class="nav-link" id="pills-update-tab" data-toggle="pill" href="#pills-update" role="tab" aria-controls="pills-update" aria-selected="false">Update</a>
+                </li>
+                <li class="nav-item" hidden>
+                    <a class="nav-link" id="pills-detail-tab" data-toggle="pill" href="#pills-detail" role="tab" aria-controls="pills-detail" aria-selected="false">Class Detail</a>
+                </li>
+
+            </ul>
+            <div class="tab-content" id="pills-tabContent">
+                <div class="tab-pane fade" id="pills-monitoring" role="tabpanel" aria-labelledby="pills-monitoring-tab">
+
+                    <form method="post">
+                        <div class="form-group">
+                            <input type="checkbox" name="monitoring" value="true" checked hidden />
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="GUID" placeholder="GUID" id="guidguid" required>
+                            <small id="emailHelp" class="form-text text-muted">Check classes you've added to the server.</small>
+                        </div>
+                        <div class="form-group">
+                            <button type="button" class="btn btn-outline-primary" id="checkcheck">Check</button>
+                        </div>
+                        <div class="form-group" hidden>
+                            <input type="text" class="form-control js-copytextarea2" id="show2">
+                        </div>
+                        <script>
+                            $("#checkcheck").click(function () {
+                                $("#menu").empty();
+
+                                if (document.getElementById('guidguid').value != '') {
+                                    jQuery.noConflict();
+                                    $('<div class="alert alert-success " role="alert">Loading...</div >').appendTo("#menu");
+
+                                    setTimeout(function () {
+                                        $('.js-copytextarea2').load("/api/WebAPI?monitoring=true&guid=" + document.getElementById('guidguid').value, function (data) {
+                                            $("#menu").empty();
+                                            console.log(data);
+
+                                            var s = data.replace(/[\(\)\[\]{}'"]/g, "").split(',');
+                                            console.log(s);
+                                            $.each(s, function (index, value) {
+                                                var l = value.split(":");
+                                                console.log(l[0]);
+                                                if (s == "") {
+                                                    var sub_li = $('<div class="alert alert-warning" role="alert">' + "You do't have any classes." + '</div >')
+                                                        .appendTo('#menu');
+                                                } else {
+                                                    if (l[1] == "Open") {
+                                                        var sub_li = $('<li class="list-group-item d-flex justify-content-between align-items-center">' + l[0] + '<span class="badge badge-primary badge-pill">' + l[1] + '</span>' + '</li>').appendTo('#menu');
+                                                    } else if (l[1] == "Close") {
+                                                        var sub_li = $('<li class="list-group-item d-flex justify-content-between align-items-center">' + l[0] + '<span class="badge badge-secondary badge-pill">' + l[1] + '</span>' + '</li>').appendTo('#menu');
+                                                    } else {
+                                                        var sub_li = $('<li class="list-group-item d-flex justify-content-between align-items-center">' + l[0] + '<span class="badge badge-dark badge-pill">' + l[1] + '</span>' + '</li>').appendTo('#menu');
+                                                    }
+
+                                                }
+                                            });
+                                        });
+                                    }, 500);
+
+                                } else {
+                                    $('<div class="alert alert-warning" role="alert">Please enter your GUID.</div >').appendTo("#menu");
+                                }
+                            });
+
+
+                        </script>
+
+                    </form>
+
+                    <ul class="list-group" id="menu"></ul>
+
+                </div>
+
+                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                    <form action="/api/WebAPI">
+                        <div>
+                            <div class="form-group">
+                                <input type="checkbox" name="registerAccount" value="true" checked hidden />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <input id="emailinpput" type="email" class="form-control" name="email" placeholder="Email" required>
+                        </div>
+                        <div class="form-group">
+                            <button id="test" class="btn btn-outline-primary" type="button">
+                                Register
+                            </button>
+                            <script>
+                                function validateEmail(email) {
+                                    var re = /^(([^<>()\[\]\\.,;:\s@@"]+(\.[^<>()\[\]\\.,;:\s@@"]+)*)|(".+"))@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                                    return re.test(String(email).toLowerCase());
+                                }
+                                $(document).ready(function () {
+                                    jQuery.noConflict();
+
+                                    $("#test").click(function () {
+                                        $("#menuRegister").empty();
+                                        $("#menuRegister2").empty();
+                                        if (validateEmail(document.getElementById('emailinpput').value)) {
+                                            $('<div class="alert alert-success" role="alert">Loading...</div >').appendTo("#menuRegister");
+
+                                            setTimeout(function () {
+                                                $('.js-copytextarea').load("/api/WebAPI?registerAccount=true&email=" + document.getElementById('emailinpput').value, function (data) {
+                                                    $("#menuRegister").empty();
+                                                    $("#menuRegister2").empty();
+                                                    $('<div class="alert alert-success" role="alert">Please go to your mailbox to activate your GUID.</div >').appendTo("#menuRegister");
+                                                    $('<div class="alert alert-info" role="alert">Your GUID: ' + data.replace(/"/g, "") + '</div >').appendTo("#menuRegister2");
+
+                                                });
+                                            }, 300);
+
+                                        } else {
+                                            $('<div class="alert alert-warning" role="alert">Please enter valid email address.</div >').appendTo("#menuRegister");
+                                        }
+
+                                    });
+
+                                });
+
+
+                            </script>
+
+                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Please Copy Your GUID</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+
+                                        </div>
+
+
+                                        <div class="modal-body">
+
+                                            <div class="input-group mb-3">
+                                                <input type="text" class="form-control js-copytextarea" id="showshow">
+                                                <div class="input-group-append">
+                                                    <button class="js-textareacopybtn btn btn-info" type="button">Copy</button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <script>
+                                                var copyTextareaBtn = document.querySelector('.js-textareacopybtn');
+
+                                                copyTextareaBtn.addEventListener('click', function (event) {
+                                                    var copyTextarea = document.querySelector('.js-copytextarea');
+                                                    copyTextarea.select();
+
+                                                    try {
+                                                        var successful = document.execCommand('copy');
+                                                        var msg = successful ? 'successful' : 'unsuccessful';
+                                                        console.log('Copying text command was ' + msg);
+                                                    } catch (err) {
+                                                        console.log('Oops, unable to copy');
+                                                    }
+                                                });
+
+                                            </script>
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </form>
+
+                    <ul class="list-group" id="menuRegister"></ul>
+                    <ul class="list-group" id="menuRegister2"></ul>
+
+                    <hr class="my-4" hidden>
+                    <form action="/api/WebAPI" hidden>
+                        <div class="form-group">
+                            <input type="checkbox" name="checkRegistration" value="true" checked hidden />
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="GUID" placeholder="GUID" required>
+                            <small id="emailHelp" class="form-text text-muted">If the return value is true, than your account is activated.</small>
+
+                        </div>
+
+                        <div class="form-group">
+                            <input class="btn btn-outline-primary" type="submit" value="Check Registration">
+                        </div>
+                    </form>
+                </div>
+                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                    <form method="post">
+                        <div style="text-align: center;">
+                            <input type="checkbox" name="addClass" value="true" checked hidden />
+                        </div>
+
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="GUID" placeholder="GUID" id="add-guid" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="prefix" placeholder="Prefix (eg: CSE)" id="add-prefix" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="number" placeholder="Number (eg: 110)" id="add-number" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="sectionNumber" placeholder="Section (eg: 40745)" id="add-section" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="number" class="form-control" name="reservedSeats" placeholder="Reserved (optional)" id="add-reserve">
+                            <small id="emailHelp" class="form-text text-muted">Enter the number next to the green triangle.</small>
+                        </div>
+
+                        <div class="form-group">
+                            <select class="form-control" name="term">
+                                @foreach (var item in Model.Term)
+                                {
+                                    <option value="@item.Key">@item.Key</option>
+                                    <option value="@item.Value" id="add-term" hidden>@item.Key</option>
+
+                                }
+
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" name="location">
+                                @foreach (var item in Model.Location)
+                                {
+                                    <option value="@item.Key">@item.Key</option>
+                                    <option value="@item.Value" id="add-location" hidden>@item.Key</option>
+
+                                }
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <button id="addbutton" class="btn btn-outline-primary" type="button">
+                                Add
+                            </button>
+                            <div class="form-group" hidden>
+                                <input type="text" class="form-control js-copytextarea3" id="show3">
+                            </div>
+                            <script>
+                                                $("#addbutton").click(function () {
+                                                    $("#Addmenu").empty();
+                                                    var v = "";
+                                                    var registered = "";
+                                                    $('<div class="alert alert-success " role="alert">Loading...</div >').appendTo("#Addmenu");
+                                                    if (document.getElementById('add-guid').value != ''
+                                                        && document.getElementById('add-prefix').value != ''
+                                                        && document.getElementById('add-number').value != ''
+                                                        && document.getElementById('add-section').value != ''
+                                                        && document.getElementById('add-term').value != ''
+                                                        && document.getElementById('add-location').value != ''
+                                                    ) {
+                                                        setTimeout(function () {
+                                                            $('.js-copytextarea3').load("/api/WebAPI?checkRegistration=true&GUID="
+                                                                + document.getElementById('add-guid').value
+                                                                , function (data) {
+                                                                    $("#Addmenu").empty();
+
+
+                                                                    if (data == "true") {
+                                                                        jQuery.noConflict();
+                                                                        $('<div class="alert alert-success " role="alert">Loading...</div >').appendTo("#Addmenu");
+
+                                                                        setTimeout(function () {
+                                                                            $('.js-copytextarea3').load("/api/WebAPI?addClass=true&GUID="
+                                                                                + document.getElementById('add-guid').value + "&prefix="
+                                                                                + document.getElementById('add-prefix').value + "&number="
+                                                                                + document.getElementById('add-number').value + "&sectionNumber="
+                                                                                + document.getElementById('add-section').value + "&reservedSeats="
+                                                                                + document.getElementById('add-reserve').value + "&term="
+                                                                                + document.getElementById('add-term').value + "&location="
+                                                                                + document.getElementById('add-location').value
+                                                                                , function (data) {
+                                                                                    $("#Addmenu").empty();
+                                                                                    $('<div class="alert alert-success " role="alert">Success, you record number is: 8' + data + '</div >').appendTo("#Addmenu");
+
+                                                                                });
+                                                                        }, 500);
+
+                                                                    } else {
+                                                                        $('<div class="alert alert-success " role="alert">Not Registered</div >').appendTo("#Addmenu");
+
+                                                                    }
+
+
+                                                                });
+                                                        }, 500);
+                                                    } else {
+                                                        $("#Addmenu").empty();
+                                                        $('<div class="alert alert-warning" role="alert">Please fill all required forms.</div >').appendTo("#Addmenu");
+                                                    }
+                                                });
+
+
+                            </script>
+
+
+                        </div>
+                    </form>
+                    <ul class="list-group" id="Addmenu"></ul>
+
+                </div>
+
+                <div class="tab-pane fade" id="pills-update" role="tabpanel" aria-labelledby="pills-update-tab">
+                    <form action="/api/WebAPI">
+                        <div class="form-group">
+                            <input type="checkbox" name="updateEmail" value="true" checked hidden />
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="GUID" placeholder="GUID" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control" name="email" placeholder="Update Email" required>
+                        </div>
+                        <button type="submit" class="btn btn-outline-primary">Update</button>
+                    </form>
+
+                </div>
+
+                <div class="tab-pane fade" id="pills-detail" role="tabpanel" aria-labelledby="pills-detail-tab">
+                    <form action="/api/WebAPI" hidden>
+
+                        <div style="text-align: center;">
+                            <input type="checkbox" name="checkClassStatus" value="true" checked hidden />
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="prefix" placeholder="Prefix (eg: CSE)" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="number" placeholder="Number (eg: 110)" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="sectionNumber" placeholder="Section Number" required>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" name="term">
+                                @foreach (var item in Model.Term)
+                                {
+                                    <option value="@item.Key">@item.Key</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" name="location">
+                                @foreach (var item in Model.Location)
+                                {
+                                    <option value="@item.Key">@item.Key</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input class="btn btn-outline-primary" type="submit" value="Check Class Status">
+                        </div>
+                    </form>
+
+
+                    <form action="/api/WebAPI">
+
+                        <div style="text-align: center;">
+                            <input type="checkbox" name="getClassData" value="true" checked hidden />
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="Prefix (eg: CSE)" placeholder="Prefix (eg: CSE)" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="Number (eg: 110)" placeholder="Number (eg: 110)" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="sectionNumber" placeholder="Section Number" required>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" name="term">
+                                @foreach (var item in Model.Term)
+                                {
+                                    <option value="@item.Key">@item.Key</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" name="location">
+                                @foreach (var item in Model.Location)
+                                {
+                                    <option value="@item.Key">@item.Key</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input class="btn btn-outline-primary" type="submit" value="Get Class Data">
+                        </div>
+                    </form>
+
+
+                </div>
+
+
+
+                <form action="/api/WebAPI" hidden>
+                    <div style="text-align: center;">
+                        <h4>Remove Class</h4>
+                    </div>
+                    <div class="form-group">
+                        <input type="checkbox" name="removeClass" value="true" checked hidden />
+                    </div>
+                    <div class="form-group">
+                        <label>GUID</label>
+                        <input type="text" class="form-control" name="GUID" placeholder="Enter GUID" required>
+                    </div>
+                    <div class="form-group">
+                        <label>classID</label>
+                        <input type="email" class="form-control" name="classID" placeholder="Enter classID" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+
+
+                <form action="/api/WebAPI" hidden>
+                    <div style="text-align: center;">
+                        <h4>Update Email Notifications</h4>
+                    </div>
+                    <div class="form-group">
+                        <input type="checkbox" name="updateEmailNotifications" value="true" checked hidden />
+                    </div>
+                    <div class="form-group">
+                        <label>GUID</label>
+                        <input type="text" class="form-control" name="GUID" placeholder="Enter GUID" required>
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input" name="allow" value="true">
+                            Check
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+
+
+
+
+
+
+                <form action="/api/WebAPI" hidden>
+                    <div style="text-align: center;">
+                        <h4>Update Enroll Status</h4>
+                    </div>
+                    <div class="form-group">
+                        <input type="checkbox" name="updateEnrollStatus" value="true" checked hidden />
+                    </div>
+                    <div class="form-group">
+                        <label>GUID</label>
+                        <input type="text" class="form-control" name="GUID" placeholder="Enter GUID" required>
+                    </div>
+                    <div class="form-group">
+                        <label>classID</label>
+                        <input type="email" class="form-control" name="classID" placeholder="Enter classID" required>
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input" name="signedUp" value="true">
+                            Check
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+
+
+
+                <form action="/api/WebAPI" hidden>
+                    <div style="text-align: center;">
+                        <h4>Check Classes For All Users (Trigger)</h4>
+                    </div>
+                    <div class="form-group">
+                        <input type="checkbox" name="checkClassesForAllUsers" value="true" checked hidden />
+                    </div>
+                    <div class="form-group">
+                        <label>Key</label>
+                        <input type="text" class="form-control" name="key" placeholder="Enter key" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+
+            </div>
+        </div>
+
+
+        <div class="jumbotron" hidden>
+            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                <li class="nav-item">
+                    <h2>Monitoring</h2>
+                </li>
+                <li class="nav-item" hidden>
+                    <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Profile</a>
+                </li>
+                <li class="nav-item" hidden>
+                    <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Contact</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="pills-tabContent">
+                <div class="tab-pane fade show active" id="pills-monitoring" role="tabpanel" aria-labelledby="pills-monitoring-tab">
+
+                    <form method="post">
+                        <div class="form-group">
+                            <input type="checkbox" name="monitoring" value="true" checked hidden />
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="GUID" placeholder="GUID" required>
+                            <small id="emailHelp" class="form-text text-muted">Check the classes you have added to the server.</small>
+
+                        </div>
+                        <button type="submit" class="btn btn-outline-primary">Check</button>
+
+                    </form>
+                    <br />
+
+                    <ul class="list-group">
+                        @{
+                            if (IsPost)
+                            {
+                                var guid = Request.Form["guid"];
+                                foreach (var x in Model.monitoringClasses(guid))
+                                {
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        @x.Key;
+                                        <span class="badge badge-success badge-pill">
+                                            @x.Value;
+                                        </span>
+                                    </li>
+                                }
+                            }
+                        }
+                    </ul>
+
+                </div>                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">...</div>
+                <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">...</div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</body>
+</html>

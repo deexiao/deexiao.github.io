@@ -1,0 +1,18 @@
+@media (max-width: 629px) {
+  img.left {
+    display: none;
+  }
+}
+@media (max-width: 629px) {
+  .articleAAA {
+    margin: 5px;
+    padding: 8px;
+    box-sizing: border-box;
+    width: 100px;
+  }
+}
+@media (max-width: 629px) {
+  li.darkTransfer {
+    pointer-events: none;
+  }
+}

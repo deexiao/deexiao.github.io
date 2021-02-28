@@ -89,7 +89,7 @@ html {
 /* 伪元素 */
 .eye::before {
   /* 不给content就看不见了 */
-  content: "";
+  content: '';
   display: block;
   border: 2px solid #000;
   width: 26px;
@@ -124,7 +124,7 @@ html {
 .mouth::before {
   position: absolute;
 
-  content: "";
+  content: '';
   width: 75px;
   height: 38px;
   border-bottom: 4px solid #000;
@@ -194,6 +194,5 @@ html {
 .face.right {
   transform: translateX(130px);
 }
-
 
 /*# sourceMappingURL=/style.e308ff8e.css.map */

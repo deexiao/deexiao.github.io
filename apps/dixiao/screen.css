@@ -2011,3 +2011,18 @@ body > footer p:last-child {
 table {
   margin-bottom: 1.5em;
 }
+@media only screen and (min-width: 480px) {
+  body #content > article > div > img .left {
+    display: block;
+  }
+}
+@media only screen and (min-width: 768px) {
+  body #content > article > div > img > .left {
+    display: block;
+  }
+}
+@media only screen and (min-width: 992px) {
+  body #content > article > div > img > .left {
+    display: block;
+  }
+}

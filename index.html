@@ -9,8 +9,11 @@
   <meta name="description" content="" />
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True" />
-  <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1" />
+  <!-- <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1" /> -->
+  <meta name="viewport"
+    content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
   <link href="./dixiao/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
     integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous" />
   <link disabled id="dark-reader" rel="stylesheet" href="dark.css" />
@@ -80,17 +83,17 @@
     </hgroup>
   </header>
   <nav role="navigation">
-    <ul class="subscription" data-subscription="rss">
+    <!-- <ul class="subscription" data-subscription="rss">
       <li>
         <a href="https://deexiao.com/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a>
       </li>
-    </ul>
+    </ul> -->
     <ul class="main-navigation">
       <li>
         <a href="https://deexiao.com/Resume.pdf"><strong>Resume.pdf</strong></a>
       </li>
       <li><a href="https://deexiao.com/blogs">Blogs</a></li>
-      <li>
+      <!-- <li class="darkTransfer">
         <a class="tray-icon" href="javascript:void(0)" onclick="dark_toggle();return false;" title="Toggle night mode">
           <i id="dark-reader-icon" class="fa fa-moon fa-pulse"
             style="color:rgb(109, 146, 190); animation-iteration-count: 0;"></i>
@@ -107,12 +110,12 @@
             document.getElementById("dark-reader").disabled = true;
           }
         </script>
-      </li>
+      </li> -->
     </ul>
   </nav>
   <div id="main">
     <div id="content">
-      <article role="article">
+      <article role="article" class="articleAAA">
         <div itemscope="" itemtype="http://schema.org/Person">
           <img class="left" src="./dixiao/dixiao.png" width="273" height="273" title="我的帅脸" alt="Photo of Di Xiao"
             itemprop="image" />
@@ -150,11 +153,12 @@
             Python Script, intends to
             monitor opening classes for ASU students.
           </p>
-
-          <p>
-            <meta itemprop="name" content="Di Xiao" />Besides academics, I am
-            also a certificated
-            <a href="https://www.padi.com/courses/advanced-open-water" itemprop="affiliation">PADI Advanced Open Water Diver</a>. I love diving into water just like my passionate about diving into code.
+          <div class="div_box">
+            <p>
+              <meta itemprop="name" content="Di Xiao" />Besides academics, I am also a certificated
+              <a href="https://www.padi.com/courses/advanced-open-water"> PADI Advanced OpenWater Diver</a>. I love
+              diving into water just like my passionate about diving into code.
+          </div>
           </p>
           <br />
           <h2>Self Projects</h2>
@@ -190,7 +194,7 @@
 
             <li>
               LinkedIn:
-              <a href="https://www.linkedin.com/in/di-xiao-%E8%90%A7%E7%AC%9B-7bb222104/" itemprop="affiliation">Di Xiao</a>
+              <a href="https://www.linkedin.com/in/di-xiao-%E8%90%A7%E7%AC%9B-7bb222104/">Di Xiao</a>
             </li>
           </ul>
         </div>
@@ -199,7 +203,7 @@
   </div>
 
   <footer role="contentinfo">
-    <p>Copyright © 2021 - <a href="https://deexiao.com">Di Xiao</a></p>
+    <p class="aaa">Copyright © 2021 - <a href="https://deexiao.com">Di Xiao</a></p>
   </footer>
 </body>
 

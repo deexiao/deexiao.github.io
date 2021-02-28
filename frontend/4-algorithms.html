@@ -1,197 +1,161 @@
 <!DOCTYPE html>
 <html class="js video maskImage placeholder" lang="en">
-  <!--<![endif]-->
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Home - Di Xiao 萧笛</title>
-    <meta name="author" content="Di Xiao" />
-    <meta name="description" content="" />
-    <!-- http://t.co/dKP3o1e -->
-    <meta name="HandheldFriendly" content="True" />
-    <meta
-      name="viewport"
-      content="width=device-width,minimum-scale=1,maximum-scale=1"
-    />
-    <link
-      href="./dixiao/screen.css"
-      media="screen, projection"
-      rel="stylesheet"
-      type="text/css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
-      integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
-      crossorigin="anonymous"
-    />
-    <link disabled id="dark-reader" rel="stylesheet" href="dark.css" />
+<!--<![endif]-->
 
-    <script type="text/javascript" async="" src="./dixiao/ga.js"></script>
-    <script src="./dixiao/modernizr-2.0.js"></script>
-    <script src="./dixiao/jquery.min.js"></script>
-    <script>
-      !window.jQuery &&
-        document.write(
-          unescape(
-            '%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'
-          )
-        );
-    </script>
-    <script src="./dixiao/octopress.js" type="text/javascript"></script>
-    <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-    <script type="text/javascript">
-      var _gaq = _gaq || [];
-      _gaq.push(["_setAccount", "UA-74091-4"]);
-      _gaq.push(["_trackPageview"]);
-      (function() {
-        var ga = document.createElement("script");
-        ga.type = "text/javascript";
-        ga.async = true;
-        ga.src =
-          ("https:" == document.location.protocol
-            ? "https://ssl"
-            : "http://www") + ".google-analytics.com/ga.js";
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(ga, s);
-      })();
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Home - Di Xiao 萧笛</title>
+  <meta name="author" content="Di Xiao" />
+  <meta name="description" content="" />
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1" />
+  <link href="./dixiao/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+    integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous" />
+  <link disabled id="dark-reader" rel="stylesheet" href="dark.css" />
 
-      // Hide element id
-      function vis_toggle(id) {
-        var e = document.getElementById(id);
-        if (e.style.display == "block") e.style.display = "none";
-        else e.style.display = "block";
+  <script type="text/javascript" async="" src="./dixiao/ga.js"></script>
+  <script src="./dixiao/modernizr-2.0.js"></script>
+  <script src="./dixiao/jquery.min.js"></script>
+  <script>
+    !window.jQuery &&
+      document.write(
+        unescape(
+          '%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'
+        )
+      );
+  </script>
+  <script src="./dixiao/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(["_setAccount", "UA-74091-4"]);
+    _gaq.push(["_trackPageview"]);
+    (function () {
+      var ga = document.createElement("script");
+      ga.type = "text/javascript";
+      ga.async = true;
+      ga.src =
+        ("https:" == document.location.protocol
+          ? "https://ssl"
+          : "http://www") + ".google-analytics.com/ga.js";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(ga, s);
+    })();
+
+    // Hide element id
+    function vis_toggle(id) {
+      var e = document.getElementById(id);
+      if (e.style.display == "block") e.style.display = "none";
+      else e.style.display = "block";
+    }
+
+    // Toggle dark mode
+    function dark_toggle() {
+      var el1 = document.getElementById("dark-reader");
+      var icon = document.getElementById("dark-reader-icon");
+      if (el1.disabled) {
+        el1.disabled = false;
+        icon.setAttribute("class", "fas fa-sun fa-pulse");
+        localStorage.setItem("darkreader", "enabled");
+      } else {
+        el1.disabled = true;
+        icon.setAttribute("class", "fas fa-moon fa-pulse");
+        localStorage.setItem("darkreader", "disabled");
       }
+    }
+  </script>
+</head>
 
-      // Toggle dark mode
-      function dark_toggle() {
-        var el1 = document.getElementById("dark-reader");
-        var icon = document.getElementById("dark-reader-icon");
-        if (el1.disabled) {
-          el1.disabled = false;
-          icon.setAttribute("class", "fas fa-sun fa-pulse");
-          localStorage.setItem("darkreader", "enabled");
-        } else {
-          el1.disabled = true;
-          icon.setAttribute("class", "fas fa-moon fa-pulse");
-          localStorage.setItem("darkreader", "disabled");
-        }
-      }
-    </script>
-  </head>
-  <body>
-    <header role="banner">
-      <hgroup>
-        <h1>
-          <a href="https://deexiao.github.io">Di Xiao</a>
-        </h1>
-        <h2>
-          Software Engineer at
-          <a href="https://www.huawei.com/us/" itemprop="affiliation"></a><br />
-        </h2>
-      </hgroup>
-    </header>
-    <nav role="navigation">
-      <ul class="subscription" data-subscription="rss">
-        <li>
-          <a
-            href="https://deexiao.github.io/atom.xml"
-            rel="subscribe-rss"
-            title="subscribe via RSS"
-            >RSS</a
-          >
-        </li>
-      </ul>
-      <ul class="main-navigation">
-        <li>
-          <a href="https://deexiao.github.io/Resume.pdf"
-            ><strong>Resume.pdf</strong></a
-          >
-        </li>
-        <li><a href="https://deexiao.github.io/blogs">Blogs</a></li>
-        <li>
-          <a
-            class="tray-icon"
-            href="javascript:void(0)"
-            onclick="dark_toggle();return false;"
-            title="Toggle night mode"
-          >
-            <i
-              id="dark-reader-icon"
-              class="fa fa-moon fa-pulse"
-              style="color:rgb(109, 146, 190); animation-iteration-count: 0;"
-            ></i>
-          </a>
-          <script>
-            if ((localStorage.getItem != null) | undefined) {
-              var icon = document.getElementById("dark-reader-icon");
-            }
-            if (localStorage.getItem("darkreader") == "enabled") {
-              document.getElementById("dark-reader").disabled = false;
-              var icon = document.getElementById("dark-reader-icon");
-              icon.setAttribute("class", "fas fa-sun fa-pulse");
-            } else {
-              document.getElementById("dark-reader").disabled = true;
-            }
-          </script>
-        </li>
-      </ul>
-    </nav>
-    <div id="main">
-      <div id="content">
-        <article role="article">
-          <div itemscope="" itemtype="http://schema.org/Person">
-            <h2>算法与数据结构</h2>
+<body>
+  <header role="banner">
+    <hgroup>
+      <h1>
+        <a href="https://deexiao.com">Di Xiao</a>
+      </h1>
+      <h2>
+        Software Engineer at
+        <a href="https://www.huawei.com/us/" itemprop="affiliation"></a><br />
+      </h2>
+    </hgroup>
+  </header>
+  <nav role="navigation">
+    <ul class="subscription" data-subscription="rss">
+      <li>
+        <a href="https://deexiao.com/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a>
+      </li>
+    </ul>
+    <ul class="main-navigation">
+      <li>
+        <a href="https://deexiao.com/Resume.pdf"><strong>Resume.pdf</strong></a>
+      </li>
+      <li><a href="https://deexiao.com/blogs">Blogs</a></li>
+      <li>
+        <a class="tray-icon" href="javascript:void(0)" onclick="dark_toggle();return false;" title="Toggle night mode">
+          <i id="dark-reader-icon" class="fa fa-moon fa-pulse"
+            style="color:rgb(109, 146, 190); animation-iteration-count: 0;"></i>
+        </a>
+        <script>
+          if ((localStorage.getItem != null) | undefined) {
+            var icon = document.getElementById("dark-reader-icon");
+          }
+          if (localStorage.getItem("darkreader") == "enabled") {
+            document.getElementById("dark-reader").disabled = false;
+            var icon = document.getElementById("dark-reader-icon");
+            icon.setAttribute("class", "fas fa-sun fa-pulse");
+          } else {
+            document.getElementById("dark-reader").disabled = true;
+          }
+        </script>
+      </li>
+    </ul>
+  </nav>
+  <div id="main">
+    <div id="content">
+      <article role="article">
+        <div itemscope="" itemtype="http://schema.org/Person">
+          <h2>算法与数据结构</h2>
 
-            <p>
-              <a
-                href="https://deexiao.github.io/frontend/4-algorithms/4-algorithms-1"
-                >【算法与数据结构】伪代码与流程图</a
-              >
-              <br />
-              <a
-                href="https://deexiao.github.io/frontend/4-algorithms/4-algorithms-2"
-                >【算法与数据结构】排序算法 (上)</a
-              >
-              <br />
-              <a
-                href="https://deexiao.github.io/frontend/4-algorithms/4-algorithms-3"
-                >【算法与数据结构】排序算法（下）</a
-              >
-              <br />
-              <a
-                href="https://deexiao.github.io/frontend/4-algorithms/4-algorithms-4"
-                >【算法与数据结构】数据结构 (上)</a
-              >
-              <br />
-              <!-- <a href="https://deexiao.github.io/algorithms/4/15462837185642">Inorder Successor in BST</a> <br>
-                        <a href="https://deexiao.github.io/algorithms/4/15462823928773">Inorder Predecessor in BST</a> <br>
-                        <a href="https://deexiao.github.io/algorithms/4/15462229519875">Binary Tree Postorder Traversal</a> <br>
-                        <a href="https://deexiao.github.io/algorithms/4/15462229151878">Binary Tree Preorder Traversal</a> <br>
-                        <a href="https://deexiao.github.io/algorithms/4/15462228579013">Binary Tree Inorder Traversal</a> <br>
-                        <a href="https://deexiao.github.io/algorithms/4/15462213418690">Minimum Depth of Binary Tree</a> <br>
-                        <a href="https://deexiao.github.io/algorithms/4/15462045000195">Binary Tree Path Sum II</a> <br>
-                        <a href="https://deexiao.github.io/algorithms/4/15461943577144">Binary Tree Path Sum</a> <br>
-                        <a href="https://deexiao.github.io/algorithms/4/15461901041767">Subtree with Maximum Average</a> <br>
-                        <a href="https://deexiao.github.io/algorithms/4/15461463915691">Closest Binary Search Tree Value II</a> <br>
-                        <a href="https://deexiao.github.io/algorithms/4/15461132952153">Lowest Common Ancestor III</a> <br>
-                        <a href="https://deexiao.github.io/algorithms/4/15461060797610">Lowest Common Ancestor II</a> <br>
-                        <a href="https://deexiao.github.io/algorithms/4/15460444264641">Kth Smallest Element in a BST</a> <br>
-                        <a href="https://deexiao.github.io/algorithms/4/15460439506864">Closest Binary Search Tree Value</a> <br>
-                        <a href="https://deexiao.github.io/algorithms/4/15460413391417">Binary Search Tree Iterator</a> <br>
-                        <a href="https://deexiao.github.io/algorithms/4/15460370658022">Flatten Binary Tree to Linked List</a> <br>
-                        <a href="https://deexiao.github.io/algorithms/4/15460359093076">Lowest Common Ancestor of a Binary Tree</a> <br>
-                        <a href="https://deexiao.github.io/algorithms/4/15460291447334">Validate Binary Search Tree</a> <br>
-                        <a href="https://deexiao.github.io/algorithms/4/15460271322942">Balanced Binary Tree</a> <br>
-                        <a href="https://deexiao.github.io/algorithms/4/15460264662693">Maximum Depth of Binary Tree</a> <br>
-                        <a href="https://deexiao.github.io/algorithms/4/15460131325568">Binary Tree Paths</a> <br>
-                        <a href="https://deexiao.github.io/algorithms/4/15460129487048">Minimum Subtree</a> <br> -->
-            </p>
-          </div>
-        </article>
-      </div>
+          <p>
+            <a href="https://deexiao.com/frontend/4-algorithms/4-algorithms-1">【算法与数据结构】伪代码与流程图</a>
+            <br />
+            <a href="https://deexiao.com/frontend/4-algorithms/4-algorithms-2">【算法与数据结构】排序算法 (上)</a>
+            <br />
+            <a href="https://deexiao.com/frontend/4-algorithms/4-algorithms-3">【算法与数据结构】排序算法（下）</a>
+            <br />
+            <a href="https://deexiao.com/frontend/4-algorithms/4-algorithms-4">【算法与数据结构】数据结构 (上)</a>
+            <br />
+            <!-- <a href="https://deexiao.com/algorithms/4/15462837185642">Inorder Successor in BST</a> <br>
+                        <a href="https://deexiao.com/algorithms/4/15462823928773">Inorder Predecessor in BST</a> <br>
+                        <a href="https://deexiao.com/algorithms/4/15462229519875">Binary Tree Postorder Traversal</a> <br>
+                        <a href="https://deexiao.com/algorithms/4/15462229151878">Binary Tree Preorder Traversal</a> <br>
+                        <a href="https://deexiao.com/algorithms/4/15462228579013">Binary Tree Inorder Traversal</a> <br>
+                        <a href="https://deexiao.com/algorithms/4/15462213418690">Minimum Depth of Binary Tree</a> <br>
+                        <a href="https://deexiao.com/algorithms/4/15462045000195">Binary Tree Path Sum II</a> <br>
+                        <a href="https://deexiao.com/algorithms/4/15461943577144">Binary Tree Path Sum</a> <br>
+                        <a href="https://deexiao.com/algorithms/4/15461901041767">Subtree with Maximum Average</a> <br>
+                        <a href="https://deexiao.com/algorithms/4/15461463915691">Closest Binary Search Tree Value II</a> <br>
+                        <a href="https://deexiao.com/algorithms/4/15461132952153">Lowest Common Ancestor III</a> <br>
+                        <a href="https://deexiao.com/algorithms/4/15461060797610">Lowest Common Ancestor II</a> <br>
+                        <a href="https://deexiao.com/algorithms/4/15460444264641">Kth Smallest Element in a BST</a> <br>
+                        <a href="https://deexiao.com/algorithms/4/15460439506864">Closest Binary Search Tree Value</a> <br>
+                        <a href="https://deexiao.com/algorithms/4/15460413391417">Binary Search Tree Iterator</a> <br>
+                        <a href="https://deexiao.com/algorithms/4/15460370658022">Flatten Binary Tree to Linked List</a> <br>
+                        <a href="https://deexiao.com/algorithms/4/15460359093076">Lowest Common Ancestor of a Binary Tree</a> <br>
+                        <a href="https://deexiao.com/algorithms/4/15460291447334">Validate Binary Search Tree</a> <br>
+                        <a href="https://deexiao.com/algorithms/4/15460271322942">Balanced Binary Tree</a> <br>
+                        <a href="https://deexiao.com/algorithms/4/15460264662693">Maximum Depth of Binary Tree</a> <br>
+                        <a href="https://deexiao.com/algorithms/4/15460131325568">Binary Tree Paths</a> <br>
+                        <a href="https://deexiao.com/algorithms/4/15460129487048">Minimum Subtree</a> <br> -->
+          </p>
+        </div>
+      </article>
     </div>
-    <footer role="contentinfo">
-      <p>Copyright © 2019 - <a href="https://deexiao.github.io">Di Xiao</a></p>
-    </footer>
-  </body>
+  </div>
+  <footer role="contentinfo">
+    <p>Copyright © 2021 - <a href="https://deexiao.com">Di Xiao</a></p>
+  </footer>
+</body>
+
 </html>

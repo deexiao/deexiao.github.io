@@ -1,184 +1,150 @@
 <!DOCTYPE html>
 <html class="js video maskImage placeholder" lang="en">
-  <!--<![endif]-->
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Home - Di Xiao 萧笛</title>
-    <meta name="author" content="Di Xiao" />
-    <meta name="description" content="" />
-    <!-- http://t.co/dKP3o1e -->
-    <meta name="HandheldFriendly" content="True" />
-    <meta
-      name="viewport"
-      content="width=device-width,minimum-scale=1,maximum-scale=1"
-    />
-    <link
-      href="./dixiao/screen.css"
-      media="screen, projection"
-      rel="stylesheet"
-      type="text/css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
-      integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
-      crossorigin="anonymous"
-    />
-    <link disabled id="dark-reader" rel="stylesheet" href="dark.css" />
+<!--<![endif]-->
 
-    <script type="text/javascript" async="" src="./dixiao/ga.js"></script>
-    <script src="./dixiao/modernizr-2.0.js"></script>
-    <script src="./dixiao/jquery.min.js"></script>
-    <script>
-      !window.jQuery &&
-        document.write(
-          unescape(
-            '%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'
-          )
-        );
-    </script>
-    <script src="./dixiao/octopress.js" type="text/javascript"></script>
-    <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-    <script type="text/javascript">
-      var _gaq = _gaq || [];
-      _gaq.push(["_setAccount", "UA-74091-4"]);
-      _gaq.push(["_trackPageview"]);
-      (function() {
-        var ga = document.createElement("script");
-        ga.type = "text/javascript";
-        ga.async = true;
-        ga.src =
-          ("https:" == document.location.protocol
-            ? "https://ssl"
-            : "http://www") + ".google-analytics.com/ga.js";
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(ga, s);
-      })();
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Home - Di Xiao 萧笛</title>
+  <meta name="author" content="Di Xiao" />
+  <meta name="description" content="" />
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1" />
+  <link href="./dixiao/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+    integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous" />
+  <link disabled id="dark-reader" rel="stylesheet" href="dark.css" />
 
-      // Hide element id
-      function vis_toggle(id) {
-        var e = document.getElementById(id);
-        if (e.style.display == "block") e.style.display = "none";
-        else e.style.display = "block";
+  <script type="text/javascript" async="" src="./dixiao/ga.js"></script>
+  <script src="./dixiao/modernizr-2.0.js"></script>
+  <script src="./dixiao/jquery.min.js"></script>
+  <script>
+    !window.jQuery &&
+      document.write(
+        unescape(
+          '%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'
+        )
+      );
+  </script>
+  <script src="./dixiao/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(["_setAccount", "UA-74091-4"]);
+    _gaq.push(["_trackPageview"]);
+    (function () {
+      var ga = document.createElement("script");
+      ga.type = "text/javascript";
+      ga.async = true;
+      ga.src =
+        ("https:" == document.location.protocol
+          ? "https://ssl"
+          : "http://www") + ".google-analytics.com/ga.js";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(ga, s);
+    })();
+
+    // Hide element id
+    function vis_toggle(id) {
+      var e = document.getElementById(id);
+      if (e.style.display == "block") e.style.display = "none";
+      else e.style.display = "block";
+    }
+
+    // Toggle dark mode
+    function dark_toggle() {
+      var el1 = document.getElementById("dark-reader");
+      var icon = document.getElementById("dark-reader-icon");
+      if (el1.disabled) {
+        el1.disabled = false;
+        icon.setAttribute("class", "fas fa-sun fa-pulse");
+        localStorage.setItem("darkreader", "enabled");
+      } else {
+        el1.disabled = true;
+        icon.setAttribute("class", "fas fa-moon fa-pulse");
+        localStorage.setItem("darkreader", "disabled");
       }
+    }
+  </script>
+</head>
 
-      // Toggle dark mode
-      function dark_toggle() {
-        var el1 = document.getElementById("dark-reader");
-        var icon = document.getElementById("dark-reader-icon");
-        if (el1.disabled) {
-          el1.disabled = false;
-          icon.setAttribute("class", "fas fa-sun fa-pulse");
-          localStorage.setItem("darkreader", "enabled");
-        } else {
-          el1.disabled = true;
-          icon.setAttribute("class", "fas fa-moon fa-pulse");
-          localStorage.setItem("darkreader", "disabled");
-        }
-      }
-    </script>
-  </head>
-  <body>
-    <header role="banner">
-      <hgroup>
-        <h1>
-          <a href="https://deexiao.github.io">Di Xiao</a>
-        </h1>
-        <h2>
-          Software Engineer at
-          <a href="https://www.huawei.com/us/" itemprop="affiliation"></a><br />
-        </h2>
-      </hgroup>
-    </header>
-    <nav role="navigation">
-      <ul class="subscription" data-subscription="rss">
-        <li>
-          <a
-            href="https://deexiao.github.io/atom.xml"
-            rel="subscribe-rss"
-            title="subscribe via RSS"
-            >RSS</a
-          >
-        </li>
-      </ul>
-      <ul class="main-navigation">
-        <li>
-          <a href="https://deexiao.github.io/Resume.pdf"
-            ><strong>Resume.pdf</strong></a
-          >
-        </li>
-        <li><a href="https://deexiao.github.io/blogs">Blogs</a></li>
-        <li>
-          <a
-            class="tray-icon"
-            href="javascript:void(0)"
-            onclick="dark_toggle();return false;"
-            title="Toggle night mode"
-          >
-            <i
-              id="dark-reader-icon"
-              class="fa fa-moon fa-pulse"
-              style="color:rgb(109, 146, 190); animation-iteration-count: 0;"
-            ></i>
-          </a>
-          <script>
-            if ((localStorage.getItem != null) | undefined) {
-              var icon = document.getElementById("dark-reader-icon");
-            }
-            if (localStorage.getItem("darkreader") == "enabled") {
-              document.getElementById("dark-reader").disabled = false;
-              var icon = document.getElementById("dark-reader-icon");
-              icon.setAttribute("class", "fas fa-sun fa-pulse");
-            } else {
-              document.getElementById("dark-reader").disabled = true;
-            }
-          </script>
-        </li>
-      </ul>
-    </nav>
-    <div id="main">
-      <div id="content">
-        <article role="article">
-          <div itemscope="" itemtype="http://schema.org/Person">
-            <h2>前后分离</h2>
+<body>
+  <header role="banner">
+    <hgroup>
+      <h1>
+        <a href="https://deexiao.com">Di Xiao</a>
+      </h1>
+      <h2>
+        Software Engineer at
+        <a href="https://www.huawei.com/us/" itemprop="affiliation"></a><br />
+      </h2>
+    </hgroup>
+  </header>
+  <nav role="navigation">
+    <ul class="subscription" data-subscription="rss">
+      <li>
+        <a href="https://deexiao.com/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a>
+      </li>
+    </ul>
+    <ul class="main-navigation">
+      <li>
+        <a href="https://deexiao.com/Resume.pdf"><strong>Resume.pdf</strong></a>
+      </li>
+      <li><a href="https://deexiao.com/blogs">Blogs</a></li>
+      <li>
+        <a class="tray-icon" href="javascript:void(0)" onclick="dark_toggle();return false;" title="Toggle night mode">
+          <i id="dark-reader-icon" class="fa fa-moon fa-pulse"
+            style="color:rgb(109, 146, 190); animation-iteration-count: 0;"></i>
+        </a>
+        <script>
+          if ((localStorage.getItem != null) | undefined) {
+            var icon = document.getElementById("dark-reader-icon");
+          }
+          if (localStorage.getItem("darkreader") == "enabled") {
+            document.getElementById("dark-reader").disabled = false;
+            var icon = document.getElementById("dark-reader-icon");
+            icon.setAttribute("class", "fas fa-sun fa-pulse");
+          } else {
+            document.getElementById("dark-reader").disabled = true;
+          }
+        </script>
+      </li>
+    </ul>
+  </nav>
+  <div id="main">
+    <div id="content">
+      <article role="article">
+        <div itemscope="" itemtype="http://schema.org/Person">
+          <h2>前后分离</h2>
 
-            <p>
-              <a href="https://deexiao.github.io/frontend/7-qhfl/7-qhfl-1"
-                >【前后分离】AJAX 的原理</a
-              >
-              <br />
-              <a href="https://deexiao.github.io/frontend/7-qhfl/7-qhfl-2"
-                >【前后分离】异步与Promise</a
-              >
-              <br />
-              <a href="https://deexiao.github.io/frontend/7-qhfl/7-qhfl-3"
-                >【前后分离】跨域、CORS、JSONP</a
-              >
-              <br />
-              <a href="https://deexiao.github.io/frontend/7-qhfl/7-qhfl-4"
-                >【前后分离】静态服务器</a
-              >
-              <br />
-              <a href="https://deexiao.github.io/frontend/7-qhfl/7-qhfl-5"
-                >【前后分离】Ajax 实战：Cookie、Session</a
-              >
-              <br />
-              <!-- <a href="https://deexiao.github.io/algorithms/6/15468404082422">N-Queens II</a> <br>
-                        <a href="https://deexiao.github.io/algorithms/6/15468392440406">N-Queens</a> <br>
-                        <a href="https://deexiao.github.io/algorithms/6/15466756538485">Word Search</a> <br>
-                        <a href="https://deexiao.github.io/algorithms/6/15466707084834">Word Pattern</a> <br>
-                        <a href="https://deexiao.github.io/algorithms/6/15466672384474">String Permutation II</a> <br>
-                        <a href="https://deexiao.github.io/algorithms/6/15466664936056">String Permutation</a> <br>
-                        <a href="https://deexiao.github.io/algorithms/6/15466638369066">Permutations II</a> <br>
-                        <a href="https://deexiao.github.io/algorithms/6/15466610461935">Permutations</a> <br>
-                        <a href="https://deexiao.github.io/algorithms/6/15466495318861">Letter Combinations of a Phone Number</a> <br> -->
-            </p>
-          </div>
-        </article>
-      </div>
+          <p>
+            <a href="https://deexiao.com/frontend/7-qhfl/7-qhfl-1">【前后分离】AJAX 的原理</a>
+            <br />
+            <a href="https://deexiao.com/frontend/7-qhfl/7-qhfl-2">【前后分离】异步与Promise</a>
+            <br />
+            <a href="https://deexiao.com/frontend/7-qhfl/7-qhfl-3">【前后分离】跨域、CORS、JSONP</a>
+            <br />
+            <a href="https://deexiao.com/frontend/7-qhfl/7-qhfl-4">【前后分离】静态服务器</a>
+            <br />
+            <a href="https://deexiao.com/frontend/7-qhfl/7-qhfl-5">【前后分离】Ajax 实战：Cookie、Session</a>
+            <br />
+            <!-- <a href="https://deexiao.com/algorithms/6/15468404082422">N-Queens II</a> <br>
+                        <a href="https://deexiao.com/algorithms/6/15468392440406">N-Queens</a> <br>
+                        <a href="https://deexiao.com/algorithms/6/15466756538485">Word Search</a> <br>
+                        <a href="https://deexiao.com/algorithms/6/15466707084834">Word Pattern</a> <br>
+                        <a href="https://deexiao.com/algorithms/6/15466672384474">String Permutation II</a> <br>
+                        <a href="https://deexiao.com/algorithms/6/15466664936056">String Permutation</a> <br>
+                        <a href="https://deexiao.com/algorithms/6/15466638369066">Permutations II</a> <br>
+                        <a href="https://deexiao.com/algorithms/6/15466610461935">Permutations</a> <br>
+                        <a href="https://deexiao.com/algorithms/6/15466495318861">Letter Combinations of a Phone Number</a> <br> -->
+          </p>
+        </div>
+      </article>
     </div>
-    <footer role="contentinfo">
-      <p>Copyright © 2019 - <a href="https://deexiao.github.io">Di Xiao</a></p>
-    </footer>
-  </body>
+  </div>
+  <footer role="contentinfo">
+    <p>Copyright © 2021 - <a href="https://deexiao.com">Di Xiao</a></p>
+  </footer>
+</body>
+
 </html>

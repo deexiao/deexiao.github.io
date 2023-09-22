@@ -10,19 +10,19 @@ const router = createRouter({
   history: routerHistory,
   routes: [
     {
-      path: '/',
+      path: '/budget-app/',
       component: Home,
     },
     {
-      path: '/budget',
+      path: '/budget-app/budget',
       component: BudgetView,
     },
     {
-      path: '/travels',
+      path: '/budget-app/travels',
       component: TravelView,
     },
     {
-      path: '/travels/:id',
+      path: '/budget-app/travels/:id',
       component: TravelDetail,
     },
   ],

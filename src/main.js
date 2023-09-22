@@ -15,3 +15,5 @@ app.mount('#app')
 
 // Deploying Vite App to GitHub Pages
 // https://dev.to/shashannkbawa/deploying-vite-app-to-github-pages-3ane
+
+// npm run deploy

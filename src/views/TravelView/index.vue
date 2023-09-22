@@ -17,7 +17,7 @@ watchEffect(() => {
       </div>
     </template>
     <div v-for="o in store.travelTable" :key="o" class="text item">
-      <router-link :to="`/travels/${o.TravelPlace}`">{{
+      <router-link :to="`/budget-app/travels/${o.TravelPlace}`">{{
         o.TravelPlace
       }}</router-link>
     </div>

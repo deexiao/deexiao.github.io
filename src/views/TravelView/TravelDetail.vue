@@ -72,7 +72,7 @@ const travelColumn = ref([
       />
     </el-tab-pane>
     <el-tab-pane :label="currPath + ' 账单'">
-      <TravelBill :data="store.travelBillTable" />
+      <TravelBill />
     </el-tab-pane>
   </el-tabs>
 </template>

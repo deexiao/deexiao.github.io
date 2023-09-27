@@ -29,12 +29,18 @@ function refreshTravelBill() {
       }
     }
   }
+  console.log('format', format)
   for (let o in format) {
     for (let i in format[o]) format[o][i] = Math.round(format[o][i])
     const newFormat = Object.assign({ name: o }, format[o])
     tableData.push(newFormat)
   }
   store.travelBillTable = tableData
+
+  for (let o = 0; o < d.length; o++) {
+    const paid = d[o].Paid
+    console.log(paid)
+  }
 }
 
 export async function getTravelOrderData() {
@@ -72,7 +78,6 @@ export async function editData(tableName, form, editID) {
 }
 
 export async function getData(tab) {
-  console.log('tab', tab)
   switch (tab) {
     case '每月定期支出':
       getBudgetData()

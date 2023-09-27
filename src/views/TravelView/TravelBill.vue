@@ -11,4 +11,26 @@ const store = useTravelStore()
     <el-table-column prop="吴世杰" label="吴世杰" width="73" />
     <el-table-column prop="李树叶" label="李树叶" />
   </el-table>
+  <div></div>
+  <el-card style="margin-top: 20px">
+    <template #header>
+      <div class="card-header">
+        <span>人均消费</span>
+      </div>
+    </template>
+    <div class="text">¥ {{ store.travelBillPerPerson }}</div>
+  </el-card>
 </template>
+
+<style>
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.text {
+  font-size: 14px;
+  margin-bottom: 18px;
+}
+</style>

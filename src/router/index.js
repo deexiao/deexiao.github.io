@@ -1,28 +1,32 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import {
+  createRouter,
+  createWebHistory,
+  createWebHashHistory,
+} from 'vue-router'
 import BudgetView from '../views/BudgetView/index.vue'
 import TravelView from '../views/TravelView/index.vue'
 import TravelDetail from '../views/TravelView/TravelDetail.vue'
 import Home from '../views/Home.vue'
 
-const routerHistory = createWebHistory()
+const routerHistory = createWebHashHistory()
 
 const router = createRouter({
   history: routerHistory,
   routes: [
     {
-      path: '/budget-app/',
+      path: '/',
       component: Home,
     },
     {
-      path: '/budget-app/budget',
+      path: '/budget',
       component: BudgetView,
     },
     {
-      path: '/budget-app/travels',
+      path: '/travels',
       component: TravelView,
     },
     {
-      path: '/budget-app/travels/:id',
+      path: '/travels/:id',
       component: TravelDetail,
     },
   ],

@@ -7,6 +7,7 @@ export const useTravelStore = defineStore('store', () => {
   const travelTable = ref([])
   const travelTableView = ref([])
   const travelBillTable = ref([])
+  const travelBillPerPerson = ref(0)
   const travelForm = ref({
     Date: '',
     Info: '',
@@ -21,6 +22,7 @@ export const useTravelStore = defineStore('store', () => {
     travelTable,
     travelTableView,
     travelBillTable,
+    travelBillPerPerson,
     travelForm,
   }
 })

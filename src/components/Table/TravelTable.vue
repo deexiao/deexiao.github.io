@@ -81,6 +81,9 @@ const handleRowClick = (row) => {
         <el-table-column :prop="c.prop" :label="c.label" />
       </template>
     </el-table>
+    <!-- <div class="example-pagination-block"> -->
+    <!-- <el-pagination layout="prev, pager, next" :total="100" /> -->
+    <!-- </div> -->
   </div>
   <el-affix position="bottom" :offset="20">
     <el-button

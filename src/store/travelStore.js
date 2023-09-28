@@ -4,10 +4,11 @@ import { ref } from 'vue'
 export const useTravelStore = defineStore('store', () => {
   const currTab = ref('Indonesia')
   const tableLoading = ref(false)
+  const pageLoading = ref(false)
   const travelTable = ref([])
   const travelTableView = ref([])
   const travelBillTable = ref([])
-  const travelBillPerPerson = ref(0)
+  const travelBillPerPerson = ref([])
   const travelForm = ref({
     Date: '',
     Info: '',
@@ -24,5 +25,6 @@ export const useTravelStore = defineStore('store', () => {
     travelBillTable,
     travelBillPerPerson,
     travelForm,
+    pageLoading,
   }
 })

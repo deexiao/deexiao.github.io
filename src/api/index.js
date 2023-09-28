@@ -5,11 +5,19 @@ import _ from 'lodash'
 
 function refreshTravelBill() {
   const store = useTravelStore()
-  const format = {
+  // 账单表格
+  const formatTb = {
     萧笛: { 张秋禾: 0, 吴世杰: 0, 李树叶: 0 },
     张秋禾: { 萧笛: 0, 吴世杰: 0, 李树叶: 0 },
     吴世杰: { 张秋禾: 0, 萧笛: 0, 李树叶: 0 },
     李树叶: { 张秋禾: 0, 吴世杰: 0, 萧笛: 0 },
+  }
+  // 个人消费
+  const formatEc = {
+    萧笛: 0,
+    张秋禾: 0,
+    吴世杰: 0,
+    李树叶: 0,
   }
 
   const d = JSON.parse(JSON.stringify(store.travelTableView))
@@ -20,27 +28,23 @@ function refreshTravelBill() {
     const group = d[o].Group
     const paid = d[o].Paid
     for (let i = 0; i < group.length; i++) {
+      formatEc[group[i]] += paid / group.length
       if (group.includes(owner)) {
-        group[i] !== owner && (format[owner][group[i]] += paid / group.length)
-        group[i] !== owner && (format[group[i]][owner] -= paid / group.length)
+        group[i] !== owner && (formatTb[owner][group[i]] += paid / group.length)
+        group[i] !== owner && (formatTb[group[i]][owner] -= paid / group.length)
       } else {
-        format[owner][group[i]] += paid / group.length
-        format[group[i]][owner] -= paid / group.length
+        formatTb[owner][group[i]] += paid / group.length
+        formatTb[group[i]][owner] -= paid / group.length
       }
     }
   }
-  console.log('format', format)
-  for (let o in format) {
-    for (let i in format[o]) format[o][i] = Math.round(format[o][i])
-    const newFormat = Object.assign({ name: o }, format[o])
+  for (let o in formatTb) {
+    for (let i in formatTb[o]) formatTb[o][i] = Math.round(formatTb[o][i])
+    const newFormat = Object.assign({ name: o }, formatTb[o])
     tableData.push(newFormat)
   }
   store.travelBillTable = tableData
-
-  for (let o = 0; o < d.length; o++) {
-    const paid = d[o].Paid
-    console.log(paid)
-  }
+  store.travelBillPerPerson = [formatEc]
 }
 
 export async function getTravelOrderData() {
@@ -57,7 +61,9 @@ export async function getTravelOrderData() {
 
 export async function getTravelData() {
   const store = useTravelStore()
+  store.pageLoading = true
   const { data } = await supabase.from('travel-table').select()
+  store.pageLoading = false
   store.travelTable = data
 }
 

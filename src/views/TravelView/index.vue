@@ -10,7 +10,7 @@ watchEffect(() => {
 </script>
 
 <template>
-  <el-card class="box-card">
+  <el-card class="box-card" v-loading="store.pageLoading">
     <template #header>
       <div class="card-header">
         <span>记日常的旅行 ✈️</span>

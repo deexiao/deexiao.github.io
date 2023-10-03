@@ -58,6 +58,7 @@ const submitFormGuest = async () => {
       <el-form-item label="Password" prop="pass">
         <el-input
           v-model="ruleFormAdmin.pass"
+          type="password"
           autocomplete="off"
           style="width: 190px"
         />
@@ -79,6 +80,7 @@ const submitFormGuest = async () => {
         <el-input
           v-model="ruleFormGuest.pass"
           autocomplete="off"
+          type="password"
           style="width: 190px"
         />
         <el-button @click="submitFormGuest()" style="margin-left: 10px"

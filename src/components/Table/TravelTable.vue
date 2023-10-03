@@ -94,9 +94,16 @@ const handleRowClick = (row) => {
       style="width: 100%"
       v-loading="store.tableLoading"
     >
-      <template v-for="c in props.column" :key="c.prop">
+      <el-table-column prop="Date" label="Date" width="58" />
+      <el-table-column prop="Owner" label="Owner" width="68" />
+      <el-table-column prop="Type" label="Type" width="54" />
+      <el-table-column prop="Info" label="Info" width="80" />
+      <el-table-column prop="Paid" label="Paid" width="55" />
+      <el-table-column prop="Group" label="Group" width="72" />
+
+      <!-- <template v-for="c in props.column" :key="c.prop">
         <el-table-column :prop="c.prop" :label="c.label" />
-      </template>
+      </template> -->
     </el-table>
     <!-- <div class="example-pagination-block"> -->
     <!-- <el-pagination layout="prev, pager, next" :total="100" /> -->

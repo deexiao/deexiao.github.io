@@ -1,7 +1,19 @@
 <script setup>
 import { useMainStore } from '~/store/index.js'
+import { onMounted } from 'vue'
 
 const store = useMainStore()
+
+onMounted(() => {
+  const email = JSON.parse(
+    localStorage.getItem('sb-zamyvhhsclvooccinpdk-auth-token')
+  ).user.email
+  if (email === 'mopjtv@gmail.com') {
+    store.signedInAdmin = true
+  } else {
+    store.signedInAdmin = false
+  }
+})
 </script>
 
 <template>

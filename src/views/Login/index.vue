@@ -19,6 +19,7 @@ const ruleFormGuest = reactive({
 onMounted(() => {
   store.signedInAdmin = false
   store.signedInGuest = false
+  localStorage.clear()
 })
 
 const submitFormAdmin = async () => {
@@ -29,6 +30,7 @@ const submitFormAdmin = async () => {
   if (!error && data.user && data.session) {
     router.push({ path: 'home' })
     store.signedInAdmin = true
+    localStorage.setItem('signedIn', true)
   }
 }
 
@@ -38,7 +40,6 @@ const submitFormGuest = async () => {
     password: ruleFormGuest.pass,
   })
   if (!error && data.user && data.session) {
-    console.log('dataGuest', data)
     router.push({ path: 'home' })
     store.signedInGuest = true
   }

@@ -1,5 +1,9 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-
+import Login from '../views/Login/index.vue'
+import Home from '../views/Home.vue'
+import Budget from '../views/BudgetView/index.vue'
+import Travels from '../views/TravelView/index.vue'
+import TravelDetail from '../views/TravelView/TravelDetail.vue'
 const routerHistory = createWebHashHistory()
 
 const router = createRouter({
@@ -7,25 +11,23 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      // component: () => import('../views/Home.vue'),
-      component: () => import('../views/Login/index.vue'),
+      component: Login,
     },
     {
       path: '/home',
-      // component: () => import('../views/Home.vue'),
-      component: () => import('../views/Home.vue'),
+      component: Home,
     },
     {
       path: '/budget',
-      component: () => import('../views/BudgetView/index.vue'),
+      component: Budget,
     },
     {
       path: '/travels',
-      component: () => import('../views/TravelView/index.vue'),
+      component: Travels,
     },
     {
       path: '/travels/:id',
-      component: () => import('../views/TravelView/TravelDetail.vue'),
+      component: TravelDetail,
     },
   ],
 })

@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import TravelDrawer from '~/components/Drawer/TravelDrawer.vue'
 import { use } from 'echarts/core'
 import { CanvasRenderer } from 'echarts/renderers'
@@ -23,6 +23,8 @@ use([
   LegendComponent,
 ])
 
+const isAdmin = ref(false)
+
 const dialog = ref(false) //抽屉里的对话框
 const controlButton = ref('')
 const editID = ref(0)
@@ -45,6 +47,17 @@ const props = defineProps([
 
 const emit = defineEmits(['update:form'])
 
+onMounted(() => {
+  const email = JSON.parse(
+    localStorage.getItem('sb-zamyvhhsclvooccinpdk-auth-token')
+  ).user.email
+  if (email === 'mopjtv@gmail.com') {
+    isAdmin.value = true
+  } else {
+    isAdmin.value = false
+  }
+})
+
 const addDialog = () => {
   dialog.value = true
   controlButton.value = 'Add'
@@ -62,7 +75,7 @@ const addDialog = () => {
 }
 
 const handleRowClick = (row) => {
-  if (storeMain.signedInAdmin) {
+  if (isAdmin.value) {
     editID.value = row.id
     dialog.value = true
     const tempRow = JSON.parse(JSON.stringify(row))
@@ -89,7 +102,7 @@ const handleRowClick = (row) => {
     <!-- <el-pagination layout="prev, pager, next" :total="100" /> -->
     <!-- </div> -->
   </div>
-  <el-affix position="bottom" :offset="20" v-if="storeMain.signedInAdmin">
+  <el-affix position="bottom" :offset="20" v-if="isAdmin">
     <el-button
       circle
       type="primary"

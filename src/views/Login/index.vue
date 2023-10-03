@@ -42,6 +42,7 @@ const submitFormGuest = async () => {
   if (!error && data.user && data.session) {
     router.push({ path: 'home' })
     store.signedInGuest = true
+    localStorage.setItem('signedIn', true)
   }
 }
 </script>

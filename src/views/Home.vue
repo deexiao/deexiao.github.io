@@ -1,17 +1,16 @@
 <script setup>
-import { useMainStore } from '~/store/index.js'
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 
-const store = useMainStore()
+const isAdmin = ref(false)
 
 onMounted(() => {
   const email = JSON.parse(
     localStorage.getItem('sb-zamyvhhsclvooccinpdk-auth-token')
   ).user.email
   if (email === 'mopjtv@gmail.com') {
-    store.signedInAdmin = true
+    isAdmin.value = true
   } else {
-    store.signedInAdmin = false
+    isAdmin.value = false
   }
 })
 </script>
@@ -19,7 +18,7 @@ onMounted(() => {
 <template>
   <el-divider><div style="font-size: 18px">XD 日常</div></el-divider>
   <el-card class="box-card">
-    <div class="text" v-if="store.signedInAdmin">
+    <div class="text" v-if="isAdmin">
       <router-link to="/budget">记日常的账 🧾</router-link>
     </div>
     <div class="text">

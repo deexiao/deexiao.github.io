@@ -13,6 +13,7 @@ import { getData } from '~/api'
 import { Plus } from '@element-plus/icons'
 import moment from 'moment'
 import { useTravelStore } from '~/store/travelStore.js'
+import { useMainStore } from '~/store/index.js'
 
 use([
   CanvasRenderer,
@@ -30,6 +31,7 @@ const classPCScreen = 'pc-screen'
 const classMobileScreen = 'mobile-screen'
 
 const store = useTravelStore()
+const storeMain = useMainStore()
 
 const props = defineProps([
   'priceAll',
@@ -60,12 +62,14 @@ const addDialog = () => {
 }
 
 const handleRowClick = (row) => {
-  editID.value = row.id
-  dialog.value = true
-  const tempRow = JSON.parse(JSON.stringify(row))
-  tempRow.Date = '2023-' + tempRow.Date
-  emit('update:form', tempRow)
-  controlButton.value = 'Edit'
+  if (storeMain.signedInAdmin) {
+    editID.value = row.id
+    dialog.value = true
+    const tempRow = JSON.parse(JSON.stringify(row))
+    tempRow.Date = '2023-' + tempRow.Date
+    emit('update:form', tempRow)
+    controlButton.value = 'Edit'
+  }
 }
 </script>
 
@@ -85,7 +89,7 @@ const handleRowClick = (row) => {
     <!-- <el-pagination layout="prev, pager, next" :total="100" /> -->
     <!-- </div> -->
   </div>
-  <el-affix position="bottom" :offset="20">
+  <el-affix position="bottom" :offset="20" v-if="storeMain.signedInAdmin">
     <el-button
       circle
       type="primary"

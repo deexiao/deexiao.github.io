@@ -1,12 +1,4 @@
-import {
-  createRouter,
-  createWebHistory,
-  createWebHashHistory,
-} from 'vue-router'
-import BudgetView from '../views/BudgetView/index.vue'
-import TravelView from '../views/TravelView/index.vue'
-import TravelDetail from '../views/TravelView/TravelDetail.vue'
-import Home from '../views/Home.vue'
+import { createRouter, createWebHashHistory } from 'vue-router'
 
 const routerHistory = createWebHashHistory()
 
@@ -15,19 +7,25 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      component: Home,
+      // component: () => import('../views/Home.vue'),
+      component: () => import('../views/Login/index.vue'),
+    },
+    {
+      path: '/home',
+      // component: () => import('../views/Home.vue'),
+      component: () => import('../views/Home.vue'),
     },
     {
       path: '/budget',
-      component: BudgetView,
+      component: () => import('../views/BudgetView/index.vue'),
     },
     {
       path: '/travels',
-      component: TravelView,
+      component: () => import('../views/TravelView/index.vue'),
     },
     {
       path: '/travels/:id',
-      component: TravelDetail,
+      component: () => import('../views/TravelView/TravelDetail.vue'),
     },
   ],
 })

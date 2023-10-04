@@ -11,18 +11,22 @@ fx.rates = {
   SGD: 1.3635,
   USD: 1,
 }
-const exchangeRadio = ref(1)
 
+const exchangeRadio = ref(1)
 const drawerRef = ref()
 const loading = ref(false)
-
 const formLabelWidth = '80px'
 
-const emit = defineEmits(['updatePageData', 'update:dialog'])
+const emit = defineEmits([
+  'updatePageData',
+  'update:dialog',
+  'update:groupButtonName',
+])
 const props = defineProps([
   'tableName',
   'controlButton',
   'dialog',
+  'groupButtonName',
   'form',
   'editID',
   'tableData',
@@ -41,6 +45,19 @@ const handleSubmit = () => {
   }
   if (exchangeRadio.value === 4) {
     form.Paid = fx(form.Paid).from('SGD').to('CNY')
+  }
+
+  if (
+    props.form.Date === null ||
+    !props.form.Info ||
+    !props.form.Type ||
+    !props.form.Group ||
+    props.form.Group.length === 0 ||
+    !props.form.Paid ||
+    !props.form.Owner
+  ) {
+    ElMessage.error('Please Enter All')
+    return
   }
 
   ElMessageBox.confirm('Do you want to submit?')
@@ -82,6 +99,19 @@ const handleDelete = async () => {
       // catch error
       console.log('catch error', e)
     })
+}
+
+const groupClick = (form) => {
+  if (form.Group && form.Group.length === 4) {
+    emit('update:groupButtonName', '清空')
+  }
+  if (props.groupButtonName === '清空') {
+    delete form.Group
+    emit('update:groupButtonName', '全选')
+  } else {
+    form['Group'] = ['萧笛', '张秋禾', '吴世杰', '李树叶']
+    emit('update:groupButtonName', '清空')
+  }
 }
 </script>
 
@@ -129,6 +159,12 @@ const handleDelete = async () => {
           </el-radio-group>
         </el-form-item>
         <el-form-item label="Group" :label-width="formLabelWidth">
+          <el-button
+            @click="groupClick(form)"
+            size="small"
+            style="margin-top: 5px; margin-bottom: 5px"
+            >{{ props.groupButtonName }}</el-button
+          >
           <el-checkbox-group v-model="form['Group']">
             <el-checkbox label="萧笛" name="type" />
             <el-checkbox label="张秋禾" name="type" />

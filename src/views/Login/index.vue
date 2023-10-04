@@ -8,6 +8,12 @@ const store = useMainStore()
 
 const router = useRouter()
 
+onMounted(() => {
+  store.signedInAdmin = false
+  store.signedInGuest = false
+  localStorage.clear()
+})
+
 const ruleFormAdmin = reactive({
   pass: '',
 })
@@ -16,13 +22,7 @@ const ruleFormGuest = reactive({
   pass: '',
 })
 
-onMounted(() => {
-  store.signedInAdmin = false
-  store.signedInGuest = false
-  localStorage.clear()
-})
-
-const submitFormAdmin = async () => {
+const submitFormAdmin = async (rule) => {
   const { data, error } = await supabase.auth.signInWithPassword({
     email: 'mopjtv@gmail.com',
     password: ruleFormAdmin.pass,
@@ -31,10 +31,13 @@ const submitFormAdmin = async () => {
     router.push({ path: 'home' })
     store.signedInAdmin = true
     localStorage.setItem('signedIn', true)
+  } else {
+    rule.pass = ''
+    ElMessage.error('Password is Incorrect.')
   }
 }
 
-const submitFormGuest = async () => {
+const submitFormGuest = async (rule) => {
   const { data, error } = await supabase.auth.signInWithPassword({
     email: 'deexiao1994@outlook.com',
     password: ruleFormGuest.pass,
@@ -43,6 +46,9 @@ const submitFormGuest = async () => {
     router.push({ path: 'home' })
     store.signedInGuest = true
     localStorage.setItem('signedIn', true)
+  } else {
+    rule.pass = ''
+    ElMessage.error('Password is Incorrect.')
   }
 }
 </script>
@@ -62,7 +68,9 @@ const submitFormGuest = async () => {
           autocomplete="off"
           style="width: 190px"
         />
-        <el-button @click="submitFormAdmin()" style="margin-left: 10px"
+        <el-button
+          @click="submitFormAdmin(ruleFormAdmin)"
+          style="margin-left: 10px"
           >Login</el-button
         >
       </el-form-item>
@@ -83,7 +91,9 @@ const submitFormGuest = async () => {
           type="password"
           style="width: 190px"
         />
-        <el-button @click="submitFormGuest()" style="margin-left: 10px"
+        <el-button
+          @click="submitFormGuest(ruleFormGuest)"
+          style="margin-left: 10px"
           >Login</el-button
         >
       </el-form-item>

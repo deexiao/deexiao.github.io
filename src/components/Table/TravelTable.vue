@@ -74,6 +74,7 @@ const addDialog = () => {
   emit('update:form', newObj)
 }
 
+const groupButtonName = ref('全选')
 const handleRowClick = (row) => {
   if (isAdmin.value) {
     editID.value = row.id
@@ -81,6 +82,12 @@ const handleRowClick = (row) => {
     const tempRow = JSON.parse(JSON.stringify(row))
     tempRow.Date = '2023-' + tempRow.Date
     emit('update:form', tempRow)
+    if (tempRow.Group.length === 4) {
+      groupButtonName.value = '清空'
+    } else {
+      groupButtonName.value = '全选'
+    }
+
     controlButton.value = 'Edit'
   }
 }
@@ -113,8 +120,8 @@ const handleRowClick = (row) => {
     <el-button
       circle
       type="primary"
-      @click="addDialog"
       style="width: 50px; height: 50px"
+      class="clear-button-shadow"
     >
       <Plus @click="addDialog" style="width: 1em; height: 1em" />
     </el-button>
@@ -127,6 +134,7 @@ const handleRowClick = (row) => {
     :tableData="props.tableData"
     v-model:dialog="dialog"
     v-model:form="props.form"
+    v-model:groupButtonName="groupButtonName"
     :isMobileScreen="props.isMobileScreen"
   />
 </template>
@@ -150,5 +158,9 @@ const handleRowClick = (row) => {
   align-items: center;
   width: 100%;
   min-height: 800px;
+}
+.clear-button-shadow {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-tap-highlight-color: transparent;
 }
 </style>

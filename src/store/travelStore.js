@@ -9,12 +9,15 @@ export const useTravelStore = defineStore('store', () => {
   const travelTableView = ref([])
   const travelBillTable = ref([])
   const travelBillPerPerson = ref([])
+  const travelLog = ref([])
+  const travelLogView = ref([])
   const travelForm = ref({
     Date: '',
     Info: '',
     Group: [],
     Paid: 0,
     Owner: '',
+    PaidBy: 'CNY',
   })
 
   return {
@@ -26,5 +29,7 @@ export const useTravelStore = defineStore('store', () => {
     travelBillPerPerson,
     travelForm,
     pageLoading,
+    travelLog,
+    travelLogView,
   }
 })

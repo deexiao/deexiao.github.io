@@ -2,6 +2,15 @@ import { supabase } from '~/lib/supabaseClient'
 import { useBudgetStore } from '~/store/budgetStore.js'
 import { useTravelStore } from '~/store/travelStore.js'
 import _ from 'lodash'
+import { fx } from 'money'
+import moment from 'moment'
+
+fx.base = 'USD'
+fx.rates = {
+  CNY: 7.2742,
+  IDR: 15362.2584,
+  USD: 1,
+}
 
 function refreshTravelBill() {
   const store = useTravelStore()
@@ -24,6 +33,13 @@ function refreshTravelBill() {
   let tableData = []
 
   for (let o = 0; o < d.length; o++) {
+    const cny = Number(d[o].Paid).toFixed(0)
+    const usd = fx(Number(d[o].Paid)).from('USD').to('CNY').toFixed(0)
+    const idr = fx(Number(d[o].Paid)).from('IDR').to('CNY').toFixed(0)
+    if (d[o].PaidBy === 'CNY') d[o].Paid = cny
+    if (d[o].PaidBy === 'USD') d[o].Paid = usd
+    if (d[o].PaidBy === 'IDR') d[o].Paid = idr
+
     const owner = d[o].Owner
     const group = d[o].Group
     const paid = d[o].Paid
@@ -54,9 +70,34 @@ export async function getTravelOrderData() {
   store.tableLoading = false
   store.travelTableView = _.orderBy(data, 'Date', 'desc')
   for (let o = 0; o < store.travelTableView.length; o++) {
-    store.travelTableView[o].Date = store.travelTableView[o].Date.slice(-5)
+    const data = store.travelTableView[o]
+    data.Date = data.Date.slice(-5)
+    data.Payer = data.Date.slice(-5) + '\n' + data.Owner + '\n' + data.Type
+
+    const cny = Number(data.Paid).toFixed(0)
+    const usd = fx(Number(data.Paid)).from('CNY').to('USD').toFixed(0)
+    const idr = fx(Number(data.Paid)).from('CNY').to('IDR').toFixed(0)
+
+    if (data.PaidBy === 'CNY') {
+      data.Paid = cny
+      data.PaidTableShow =
+        '🇨🇳 ' + cny + ' *' + '\n' + '🇺🇸 ' + usd + '\n' + '🇮🇩 ' + idr
+    }
+    if (data.PaidBy === 'USD') {
+      data.Paid = usd
+      data.PaidTableShow =
+        '🇨🇳 ' + cny + '\n' + '🇺🇸 ' + usd + ' *' + '\n' + '🇮🇩 ' + idr
+    }
+    if (data.PaidBy === 'IDR') {
+      data.Paid = idr
+      data.PaidTableShow =
+        '🇨🇳 ' + cny + '\n' + '🇺🇸 ' + usd + '\n' + '🇮🇩 ' + idr + ' *'
+    }
+
+    store.travelTableView[o] = data
   }
   refreshTravelBill()
+  getTravelLog()
 }
 
 export async function getTravelData() {
@@ -67,9 +108,33 @@ export async function getTravelData() {
   store.travelTable = data
 }
 
+export async function getTravelLog() {
+  const store = useTravelStore()
+  const { data } = await supabase.from('travel-log').select()
+  let tempData = []
+  for (let o = 0; o < data.length; o++) {
+    let obj = data[o]
+    obj.Log = JSON.stringify(data[o].Log)
+    tempData.push(obj)
+  }
+  tempData = _.orderBy(tempData, 'Date', 'desc')
+  store.travelLog = data
+  store.travelLogView = tempData
+}
+
 export async function addData(tableName, form) {
   if (tableName === 'travel-order-table') {
     await supabase.from(tableName).insert([form]).select()
+    await supabase
+      .from('travel-log')
+      .insert([
+        {
+          Date: moment().format('MM-DD h:mm A'),
+          Type: 'Add',
+          Log: form,
+        },
+      ])
+      .select()
   } else {
     await supabase.from(tableName).insert([form]).select()
   }
@@ -78,6 +143,16 @@ export async function addData(tableName, form) {
 export async function editData(tableName, form, editID) {
   if (tableName === 'travel-order-table') {
     await supabase.from(tableName).update([form]).eq('id', editID)
+    await supabase
+      .from('travel-log')
+      .insert([
+        {
+          Date: moment().format('MM-DD h:mm a'),
+          Type: 'Edit',
+          Log: form,
+        },
+      ])
+      .select()
   } else {
     await supabase.from(tableName).update([form]).eq('id', editID)
   }

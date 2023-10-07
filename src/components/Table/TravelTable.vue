@@ -13,7 +13,6 @@ import { getData } from '~/api'
 import { Plus } from '@element-plus/icons'
 import moment from 'moment'
 import { useTravelStore } from '~/store/travelStore.js'
-import { useMainStore } from '~/store/index.js'
 
 use([
   CanvasRenderer,
@@ -33,7 +32,6 @@ const classPCScreen = 'pc-screen'
 const classMobileScreen = 'mobile-screen'
 
 const store = useTravelStore()
-const storeMain = useMainStore()
 
 const props = defineProps([
   'priceAll',
@@ -42,7 +40,6 @@ const props = defineProps([
   'echartsData',
   'tableName',
   'isMobileScreen',
-  'column',
 ])
 
 const emit = defineEmits(['update:form'])
@@ -59,6 +56,7 @@ onMounted(() => {
 })
 
 const addDialog = () => {
+  groupButtonName.value = '全选'
   dialog.value = true
   controlButton.value = 'Add'
   let newObj = {}
@@ -71,6 +69,7 @@ const addDialog = () => {
     }
   }
   newObj.Date = moment().format('YYYY-MM-DD')
+  // newObj.PaidDrawerShow = {}
   emit('update:form', newObj)
 }
 
@@ -94,27 +93,20 @@ const handleRowClick = (row) => {
 </script>
 
 <template>
-  <div :class="isMobileScreen ? classMobileScreen : classPCScreen">
-    <el-table
-      :data="props.tableData"
-      @row-click="handleRowClick"
-      style="width: 100%"
-      v-loading="store.tableLoading"
-    >
-      <el-table-column prop="Date" label="Date" width="58" />
-      <el-table-column prop="Owner" label="Owner" width="68" />
-      <el-table-column prop="Type" label="Type" width="54" />
-      <el-table-column prop="Info" label="Info" width="80" />
-      <el-table-column prop="Paid" label="Paid" width="55" />
-      <el-table-column prop="Group" label="Group" width="72" />
-
-      <!-- <template v-for="c in props.column" :key="c.prop">
-        <el-table-column :prop="c.prop" :label="c.label" />
-      </template> -->
-    </el-table>
-    <!-- <div class="example-pagination-block"> -->
-    <!-- <el-pagination layout="prev, pager, next" :total="100" /> -->
-    <!-- </div> -->
+  <div class="home">
+    <div :class="isMobileScreen ? classMobileScreen : classPCScreen">
+      <el-table
+        :data="props.tableData"
+        @row-click="handleRowClick"
+        style="width: 100%"
+        v-loading="store.tableLoading"
+      >
+        <el-table-column prop="Payer" label="Payer" width="69" />
+        <el-table-column prop="Info" label="Info" width="80" />
+        <el-table-column prop="PaidTableShow" label="Spending" width="115" />
+        <el-table-column prop="Group" label="Unpaid" width="112" />
+      </el-table>
+    </div>
   </div>
   <el-affix position="bottom" :offset="20" v-if="isAdmin">
     <el-button
@@ -122,10 +114,12 @@ const handleRowClick = (row) => {
       type="primary"
       style="width: 50px; height: 50px"
       class="clear-button-shadow"
+      @click="addDialog"
     >
       <Plus @click="addDialog" style="width: 1em; height: 1em" />
     </el-button>
   </el-affix>
+
   <TravelDrawer
     @updatePageData="getData('Indonesia')"
     :tableName="props.tableName"
@@ -140,6 +134,11 @@ const handleRowClick = (row) => {
 </template>
 
 <style scoped>
+.home {
+  :deep(.el-table .cell) {
+    white-space: pre-line;
+  }
+}
 .add-button {
   width: 115px;
 }

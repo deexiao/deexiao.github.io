@@ -2,21 +2,17 @@
 import { ref, watchEffect, onBeforeMount, onBeforeUnmount } from 'vue'
 import { useTravelStore } from '~/store/travelStore.js'
 import { getData } from '~/api'
-import { useRoute } from 'vue-router'
 import TravelTable from '~/components/Table/TravelTable.vue'
 import TravelBill from '~/views/TravelView/TravelBill.vue'
+import TravelCurrency from '~/views/TravelView/TravelCurrency.vue'
+import TravelLog from '~/views/TravelView/TravelLog.vue'
 
 const store = useTravelStore()
 const activeName = ref('left')
 const selectedTab = ref('Indonesia')
 const isMobileScreen = ref(false)
 
-// 当前路径
-const currPath = ref('')
-
 watchEffect(async () => {
-  const route = useRoute()
-  currPath.value = route.params.id
   store.currTab = selectedTab.value
   await getData('Indonesia')
 })
@@ -43,15 +39,6 @@ const renderResize = () => {
     activeName.value = 'left'
   }
 }
-
-const travelColumn = ref([
-  { prop: 'Date', label: 'Date' },
-  { prop: 'Owner', label: 'Owner' },
-  { prop: 'Type', label: 'Type' },
-  { prop: 'Info', label: 'Info' },
-  { prop: 'Paid', label: 'Paid' },
-  { prop: 'Group', label: 'Group' },
-])
 </script>
 
 <template>
@@ -60,7 +47,7 @@ const travelColumn = ref([
     @tab-click="handleClick"
     :tab-position="activeName"
   >
-    <el-tab-pane :label="currPath + ' 记账'">
+    <el-tab-pane label="印尼记账">
       <TravelTable
         :tableData="store.travelTableView"
         :echartsData="store.budgetEchartsData"
@@ -68,11 +55,16 @@ const travelColumn = ref([
         :priceAll="store.monthPriceAll"
         v-model:form="store.travelForm"
         :isMobileScreen="isMobileScreen"
-        :column="travelColumn"
       />
     </el-tab-pane>
-    <el-tab-pane :label="currPath + ' 账单'">
+    <el-tab-pane label="账单统计">
       <TravelBill />
+    </el-tab-pane>
+    <el-tab-pane label="汇率换算">
+      <TravelCurrency />
+    </el-tab-pane>
+    <el-tab-pane label="日志">
+      <TravelLog />
     </el-tab-pane>
   </el-tabs>
 </template>

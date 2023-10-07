@@ -3,16 +3,16 @@ import { ref } from 'vue'
 import { addData, editData, getData } from '~/api'
 import { supabase } from '~/lib/supabaseClient'
 import { fx } from 'money'
+import { checkboxGroupEmits } from 'element-plus'
+import moment from 'moment'
 
 fx.base = 'USD'
 fx.rates = {
-  CNY: 7.2742,
-  IDR: 15362.2584,
-  SGD: 1.3635,
+  CNY: 7.1987,
+  IDR: 15631.24,
   USD: 1,
 }
 
-const exchangeRadio = ref(1)
 const drawerRef = ref()
 const loading = ref(false)
 const formLabelWidth = '80px'
@@ -36,15 +36,28 @@ const handleSubmit = () => {
   if (loading.value) return
 
   let form = {}
-  for (let o in props.form) form[o] = props.form[o]
-  if (exchangeRadio.value === 2) {
-    form.Paid = fx(form.Paid).from('USD').to('CNY')
+
+  if (props.form.PaidTableShow || props.form.PaidTableShow === '') {
+    delete props.form.PaidTableShow
   }
-  if (exchangeRadio.value === 3) {
-    form.Paid = fx(form.Paid).from('IDR').to('CNY')
+  if (props.form.Payer || props.form.Payer === '') {
+    delete props.form.Payer
   }
-  if (exchangeRadio.value === 4) {
-    form.Paid = fx(form.Paid).from('SGD').to('CNY')
+
+  for (let o in props.form) {
+    form[o] = props.form[o]
+  }
+
+  if (props.form.PaidBy === 'CNY') {
+    form.PaidBy = 'CNY'
+  }
+  if (props.form.PaidBy === 'USD') {
+    form.Paid = fx(form.Paid).from('USD').to('CNY').toFixed(0)
+    form.PaidBy = 'USD'
+  }
+  if (props.form.PaidBy === 'IDR') {
+    form.Paid = fx(form.Paid).from('IDR').to('CNY').toFixed(0)
+    form.PaidBy = 'IDR'
   }
 
   if (
@@ -64,14 +77,13 @@ const handleSubmit = () => {
     .then(async () => {
       loading.value = true
       props.controlButton === 'Add'
-        ? addData(props.tableName, form)
-        : editData(props.tableName, form, props.editID)
+        ? await addData(props.tableName, form)
+        : await editData(props.tableName, form, props.editID)
       loading.value = false
       drawerRef.value.close()
       emit('update:dialog', false)
       emit('updatePageData')
       getData('Indonesia')
-      exchangeRadio.value = 1
     })
     .catch((e) => {
       // catch error
@@ -82,13 +94,22 @@ const handleSubmit = () => {
 const cancelForm = () => {
   loading.value = false
   emit('update:dialog', false)
-  exchangeRadio.value = 1
 }
 
 const handleDelete = async () => {
   ElMessageBox.confirm('Do you want to submit?')
     .then(async () => {
       await supabase.from(props.tableName).delete().eq('id', props.form.id)
+      await supabase
+        .from('travel-log')
+        .insert([
+          {
+            Date: moment().format('MM-DD h:mm a'),
+            Type: 'Delete',
+            Log: props.form,
+          },
+        ])
+        .select()
       loading.value = false
       drawerRef.value.close()
       emit('update:dialog', false)
@@ -112,6 +133,10 @@ const groupClick = (form) => {
     form['Group'] = ['萧笛', '张秋禾', '吴世杰', '李树叶']
     emit('update:groupButtonName', '清空')
   }
+}
+
+const onPaidChoose = (e) => {
+  console.log(e.target.value)
 }
 </script>
 
@@ -155,6 +180,7 @@ const groupClick = (form) => {
             <el-radio label="🚍">🚍</el-radio>
             <el-radio label="⛽️">⛽️</el-radio>
             <el-radio label="👮">👮</el-radio>
+            <el-radio label="🚄">🚄</el-radio>
             <el-radio label="其它">其它</el-radio>
           </el-radio-group>
         </el-form-item>
@@ -174,10 +200,10 @@ const groupClick = (form) => {
         </el-form-item>
 
         <el-form-item label="Paid" :label-width="formLabelWidth">
-          <el-radio-group v-model="exchangeRadio">
-            <el-radio :label="1">CNY</el-radio>
-            <el-radio :label="2">USD</el-radio>
-            <el-radio :label="3">IDR</el-radio>
+          <el-radio-group v-model="form['PaidBy']" @input="onPaidChoose">
+            <el-radio label="CNY">CNY</el-radio>
+            <el-radio label="USD">USD</el-radio>
+            <el-radio label="IDR">IDR</el-radio>
           </el-radio-group>
           <el-input v-model="form['Paid']" autocomplete="off" />
         </el-form-item>
@@ -190,19 +216,30 @@ const groupClick = (form) => {
           </el-radio-group>
         </el-form-item>
       </el-form>
-      <div>
-        <el-button type="primary" :loading="loading" @click="handleSubmit()">{{
-          loading ? 'Submitting ...' : 'Submit'
-        }}</el-button>
-        <el-button type="danger" :loading="loading" @click="handleDelete()">{{
-          loading ? 'Deleting ...' : 'Delete'
-        }}</el-button>
+      <div class="btn">
+        <el-button
+          size="small"
+          type="primary"
+          :loading="loading"
+          @click="handleSubmit()"
+          >{{ loading ? 'Submitting ...' : 'Submit' }}</el-button
+        >
+        <el-button
+          size="small"
+          type="danger"
+          :loading="loading"
+          @click="handleDelete()"
+          >{{ loading ? 'Deleting ...' : 'Delete' }}</el-button
+        >
       </div>
     </div>
   </el-drawer>
 </template>
 
 <style scoped>
+.btn {
+  margin-top: -10px;
+}
 .input-value {
   margin-left: -35px;
   margin-bottom: 30px;

@@ -19,16 +19,6 @@ const props = defineProps([
 
 const handleSubmit = () => {
   if (loading.value) return
-  // if (props.controlButton === 'Add') {
-  //   for (let o = 0; o < props.tableData.length; o++) {
-  //     if (props.form.name === props.tableData[o].name) {
-  //       drawerRef.value.close()
-  //       emit('update:dialog', false)
-  //       ElMessage.error('重复命名')
-  //       return
-  //     }
-  //   }
-  // }
 
   let form = {}
   for (let o in props.form) form[o] = props.form[o]
@@ -76,12 +66,6 @@ const cancelForm = () => {
             </el-form-item>
           </template>
         </template>
-        <!-- <el-form-item label="名字" :label-width="formLabelWidth">
-          <el-input v-model="props.form.name" autocomplete="off" />
-        </el-form-item>
-        <el-form-item label="价格" :label-width="formLabelWidth">
-          <el-input v-model="props.form.price" autocomplete="off" />
-        </el-form-item> -->
       </el-form>
       <div>
         <el-button type="primary" :loading="loading" @click="handleSubmit()">{{

@@ -23,10 +23,12 @@ const ruleFormGuest = reactive({
 })
 
 const submitFormAdmin = async (rule) => {
+  store.signAdminLoading = true
   const { data, error } = await supabase.auth.signInWithPassword({
     email: 'mopjtv@gmail.com',
     password: ruleFormAdmin.pass,
   })
+  store.signAdminLoading = false
   if (!error && data.user && data.session) {
     router.push({ path: 'home' })
     store.signedInAdmin = true
@@ -38,10 +40,12 @@ const submitFormAdmin = async (rule) => {
 }
 
 const submitFormGuest = async (rule) => {
+  store.signGuestLoading = true
   const { data, error } = await supabase.auth.signInWithPassword({
     email: 'deexiao1994@outlook.com',
     password: ruleFormGuest.pass,
   })
+  store.signGuestLoading = false
   if (!error && data.user && data.session) {
     router.push({ path: 'home' })
     store.signedInGuest = true
@@ -54,7 +58,7 @@ const submitFormGuest = async (rule) => {
 </script>
 
 <template>
-  <el-card class="box-card">
+  <el-card class="box-card" v-loading="store.signAdminLoading">
     <template #header>
       <div class="card-header">
         <span>Admin</span>
@@ -66,7 +70,7 @@ const submitFormGuest = async (rule) => {
           v-model="ruleFormAdmin.pass"
           type="password"
           autocomplete="off"
-          style="width: 190px"
+          style="width: 180px"
         />
         <el-button
           @click="submitFormAdmin(ruleFormAdmin)"
@@ -77,7 +81,7 @@ const submitFormGuest = async (rule) => {
     </el-form>
   </el-card>
   <br />
-  <el-card class="box-card">
+  <el-card class="box-card" v-loading="store.signGuestLoading">
     <template #header>
       <div class="card-header">
         <span>Guest</span>
@@ -89,7 +93,7 @@ const submitFormGuest = async (rule) => {
           v-model="ruleFormGuest.pass"
           autocomplete="off"
           type="password"
-          style="width: 190px"
+          style="width: 180px"
         />
         <el-button
           @click="submitFormGuest(ruleFormGuest)"

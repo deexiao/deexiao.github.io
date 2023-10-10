@@ -102,9 +102,9 @@ const handleRowClick = (row) => {
         v-loading="store.tableLoading"
       >
         <el-table-column prop="Payer" label="Payer" width="69" />
-        <el-table-column prop="Info" label="Info" width="80" />
+        <el-table-column prop="Info" label="Info" />
         <el-table-column prop="PaidTableShow" label="Spending" width="115" />
-        <el-table-column prop="Group" label="Unpaid" width="112" />
+        <el-table-column prop="Group" label="Unpaid" />
       </el-table>
     </div>
   </div>

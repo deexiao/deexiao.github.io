@@ -52,11 +52,11 @@ const handleSubmit = () => {
     form.PaidBy = 'CNY'
   }
   if (props.form.PaidBy === 'USD') {
-    form.Paid = fx(form.Paid).from('USD').to('CNY').toFixed(0)
+    form.Paid = fx(form.Paid).from('USD').to('CNY')
     form.PaidBy = 'USD'
   }
   if (props.form.PaidBy === 'IDR') {
-    form.Paid = fx(form.Paid).from('IDR').to('CNY').toFixed(0)
+    form.Paid = fx(form.Paid).from('IDR').to('CNY')
     form.PaidBy = 'IDR'
   }
 

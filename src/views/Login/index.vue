@@ -3,6 +3,7 @@ import { onMounted, reactive, ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { supabase } from '~/lib/supabaseClient'
 import { useMainStore } from '~/store/index.js'
+import { Plus } from '@element-plus/icons'
 
 const store = useMainStore()
 
@@ -65,18 +66,15 @@ const submitFormGuest = async (rule) => {
       </div>
     </template>
     <el-form :model="ruleFormAdmin" status-icon>
-      <el-form-item label="Password" prop="pass">
+      <el-form-item prop="pass">
         <el-input
           v-model="ruleFormAdmin.pass"
           type="password"
-          autocomplete="off"
-          style="width: 180px"
-        />
-        <el-button
-          @click="submitFormAdmin(ruleFormAdmin)"
-          style="margin-left: 10px"
-          >Login</el-button
+          placeholder="Password"
+          @change="submitFormAdmin(ruleFormAdmin)"
         >
+          <template #append> Login </template>
+        </el-input>
       </el-form-item>
     </el-form>
   </el-card>
@@ -88,18 +86,15 @@ const submitFormGuest = async (rule) => {
       </div>
     </template>
     <el-form :model="ruleFormGuest" status-icon>
-      <el-form-item label="Password" prop="pass">
+      <el-form-item prop="pass">
         <el-input
           v-model="ruleFormGuest.pass"
-          autocomplete="off"
           type="password"
-          style="width: 180px"
-        />
-        <el-button
-          @click="submitFormGuest(ruleFormGuest)"
-          style="margin-left: 10px"
-          >Login</el-button
+          placeholder="Password"
+          @change="submitFormGuest(ruleFormGuest)"
         >
+          <template #append> Login </template>
+        </el-input>
       </el-form-item>
     </el-form>
   </el-card>

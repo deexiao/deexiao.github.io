@@ -9,17 +9,17 @@ import TravelLog from '~/views/TravelView/TravelLog.vue'
 
 const store = useTravelStore()
 const activeName = ref('left')
-const selectedTab = ref('Indonesia')
+const selectedTab = ref('Japan')
 const isMobileScreen = ref(false)
 
 watchEffect(async () => {
   store.currTab = selectedTab.value
-  await getData('Indonesia')
+  await getData('Japan')
 })
 
 const handleClick = (tab, event) => {
   selectedTab.value = store.currTab
-  getData('Indonesia')
+  getData('Japan')
 }
 
 onBeforeMount(() => {
@@ -47,7 +47,7 @@ const renderResize = () => {
     @tab-click="handleClick"
     :tab-position="activeName"
   >
-    <el-tab-pane label="印尼记账">
+    <el-tab-pane label="日本记账">
       <TravelTable
         :tableData="store.travelTableView"
         :echartsData="store.budgetEchartsData"
@@ -60,9 +60,9 @@ const renderResize = () => {
     <el-tab-pane label="账单统计">
       <TravelBill />
     </el-tab-pane>
-    <el-tab-pane label="汇率换算">
+    <!-- <el-tab-pane label="汇率换算">
       <TravelCurrency />
-    </el-tab-pane>
+    </el-tab-pane> -->
     <el-tab-pane label="日志">
       <TravelLog />
     </el-tab-pane>

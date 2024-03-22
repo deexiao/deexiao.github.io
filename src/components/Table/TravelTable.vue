@@ -121,7 +121,7 @@ const handleRowClick = (row) => {
   </el-affix>
 
   <TravelDrawer
-    @updatePageData="getData('Indonesia')"
+    @updatePageData="getData('Japan')"
     :tableName="props.tableName"
     :controlButton="controlButton"
     :editID="editID"

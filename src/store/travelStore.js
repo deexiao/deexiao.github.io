@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
 export const useTravelStore = defineStore('store', () => {
-  const currTab = ref('Indonesia')
+  const currTab = ref('Japan')
   const tableLoading = ref(false)
   const pageLoading = ref(false)
   const travelTable = ref([])

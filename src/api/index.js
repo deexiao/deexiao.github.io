@@ -7,8 +7,8 @@ import moment from 'moment'
 
 fx.base = 'USD'
 fx.rates = {
-  CNY: 7.2742,
-  IDR: 15362.2584,
+  CNY: 7.2296,
+  JPY: 151.4619,
   USD: 1,
 }
 
@@ -16,17 +16,13 @@ function refreshTravelBill() {
   const store = useTravelStore()
   // 账单表格
   const formatTb = {
-    萧笛: { 张秋禾: 0, 吴世杰: 0, 李树叶: 0 },
-    张秋禾: { 萧笛: 0, 吴世杰: 0, 李树叶: 0 },
-    吴世杰: { 张秋禾: 0, 萧笛: 0, 李树叶: 0 },
-    李树叶: { 张秋禾: 0, 吴世杰: 0, 萧笛: 0 },
+    萧笛: { 张秋禾: 0 },
+    张秋禾: { 萧笛: 0 },
   }
   // 个人消费
   const formatEc = {
     萧笛: 0,
     张秋禾: 0,
-    吴世杰: 0,
-    李树叶: 0,
   }
 
   const d = JSON.parse(JSON.stringify(store.travelTableView))
@@ -35,10 +31,10 @@ function refreshTravelBill() {
   for (let o = 0; o < d.length; o++) {
     const cny = Number(d[o].Paid).toFixed(0)
     const usd = fx(Number(d[o].Paid)).from('USD').to('CNY').toFixed(0)
-    const idr = fx(Number(d[o].Paid)).from('IDR').to('CNY').toFixed(0)
+    const idr = fx(Number(d[o].Paid)).from('JPY').to('CNY').toFixed(0)
     if (d[o].PaidBy === 'CNY') d[o].Paid = cny
     if (d[o].PaidBy === 'USD') d[o].Paid = usd
-    if (d[o].PaidBy === 'IDR') d[o].Paid = idr
+    if (d[o].PaidBy === 'JPY') d[o].Paid = idr
 
     const owner = d[o].Owner
     const group = d[o].Group
@@ -76,22 +72,22 @@ export async function getTravelOrderData() {
 
     const cny = Number(data.Paid).toFixed(0)
     const usd = fx(Number(data.Paid)).from('CNY').to('USD').toFixed(0)
-    const idr = fx(Number(data.Paid)).from('CNY').to('IDR').toFixed(0)
+    const idr = fx(Number(data.Paid)).from('CNY').to('JPY').toFixed(0)
 
     if (data.PaidBy === 'CNY') {
       data.Paid = cny
       data.PaidTableShow =
-        '🇨🇳 ' + cny + ' *' + '\n' + '🇺🇸 ' + usd + '\n' + '🇮🇩 ' + idr
+        '🇨🇳 ' + cny + ' *' + '\n' + '🇺🇸 ' + usd + '\n' + '🇯🇵 ' + idr
     }
     if (data.PaidBy === 'USD') {
       data.Paid = usd
       data.PaidTableShow =
-        '🇨🇳 ' + cny + '\n' + '🇺🇸 ' + usd + ' *' + '\n' + '🇮🇩 ' + idr
+        '🇨🇳 ' + cny + '\n' + '🇺🇸 ' + usd + ' *' + '\n' + '🇯🇵 ' + idr
     }
-    if (data.PaidBy === 'IDR') {
+    if (data.PaidBy === 'JPY') {
       data.Paid = idr
       data.PaidTableShow =
-        '🇨🇳 ' + cny + '\n' + '🇺🇸 ' + usd + '\n' + '🇮🇩 ' + idr + ' *'
+        '🇨🇳 ' + cny + '\n' + '🇺🇸 ' + usd + '\n' + '🇯🇵 ' + idr + ' *'
     }
 
     store.travelTableView[o] = data
@@ -166,7 +162,7 @@ export async function getData(tab) {
     case '买菜开销':
       getFoodData()
       break
-    case 'Indonesia':
+    case 'Japan':
       await getTravelOrderData()
       break
     default:

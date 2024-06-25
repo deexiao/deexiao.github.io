@@ -104,7 +104,7 @@ const handleRowClick = (row) => {
         <el-table-column prop="Payer" label="Payer" width="69" />
         <el-table-column prop="Info" label="Info" />
         <el-table-column prop="PaidTableShow" label="Spending" width="115" />
-        <el-table-column prop="Group" label="Unpaid" />
+        <el-table-column prop="Group" label="Group" />
       </el-table>
     </div>
   </div>

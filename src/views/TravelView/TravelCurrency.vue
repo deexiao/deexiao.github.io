@@ -4,21 +4,21 @@ import { fx } from 'money'
 
 fx.base = 'USD'
 fx.rates = {
-  CNY: 7.1987,
-  IDR: 15631.24,
+  CNY: 7.26,
+  JPY: 159.68,
   USD: 1,
 }
 
 const numCNY = ref()
 const numUSD = ref()
-const numIDR = ref()
+const numJPY = ref()
 
 const handleChangeCNY = (value) => {
   if (!value) {
     onClear()
   } else {
     numUSD.value = fx(value).from('CNY').to('USD')
-    numIDR.value = fx(value).from('CNY').to('IDR')
+    numJPY.value = fx(value).from('CNY').to('JPY')
   }
 }
 const handleChangeUSD = (value) => {
@@ -26,21 +26,21 @@ const handleChangeUSD = (value) => {
     onClear()
   } else {
     numCNY.value = fx(value).from('USD').to('CNY')
-    numIDR.value = fx(value).from('USD').to('IDR')
+    numJPY.value = fx(value).from('USD').to('JPY')
   }
 }
-const handleChangeIDR = (value) => {
+const handleChangeJPY = (value) => {
   if (!value) {
     onClear()
   } else {
-    numCNY.value = fx(value).from('IDR').to('CNY')
-    numUSD.value = fx(value).from('IDR').to('USD')
+    numCNY.value = fx(value).from('JPY').to('CNY')
+    numUSD.value = fx(value).from('JPY').to('USD')
   }
 }
 const onClear = () => {
   numCNY.value = null
   numUSD.value = null
-  numIDR.value = null
+  numJPY.value = null
 }
 </script>
 
@@ -71,10 +71,10 @@ const onClear = () => {
         />
       </p>
       <p class="p-class">
-        印尼盾
+        日元
         <el-input-number
-          v-model="numIDR"
-          @input="handleChangeIDR"
+          v-model="numJPY"
+          @input="handleChangeJPY"
           class="input-number"
         />
       </p>

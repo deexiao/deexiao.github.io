@@ -14,7 +14,6 @@ fx.rates = {
 }
 const drawerRef = ref()
 const loading = ref(false)
-const formLabelWidth = '80px'
 
 const emit = defineEmits([
   'updatePageData',
@@ -146,16 +145,17 @@ const onPaidChoose = (e) => {
     :title="controlButton"
     :before-close="cancelForm"
     direction="ltr"
-    size="78%"
+    size="86%"
     class="demo-drawer"
   >
     <div>
-      <el-form :model="form" class="input-value">
-        <el-form-item
-          label="Date"
-          :label-width="formLabelWidth"
-          style="margin-top: -15px"
-        >
+      <el-form
+        :model="form"
+        class="input-value"
+        :label-position="left"
+        :label-width="auto"
+      >
+        <el-form-item label="Date" style="margin-top: -15px">
           <el-date-picker
             v-model="form['Date']"
             type="date"
@@ -163,10 +163,12 @@ const onPaidChoose = (e) => {
             value-format="YYYY-MM-DD"
           />
         </el-form-item>
-        <el-form-item label="Info" :label-width="formLabelWidth">
+
+        <el-form-item label="Info">
           <el-input v-model="form['Info']" autocomplete="off" />
         </el-form-item>
-        <el-form-item label="Type" :label-width="formLabelWidth">
+
+        <el-form-item label="Type">
           <el-radio-group v-model="form['Type']">
             <el-radio label="🏨">🏨</el-radio>
             <el-radio label="🍽️">🍽️</el-radio>
@@ -182,7 +184,18 @@ const onPaidChoose = (e) => {
             <el-radio label="其它">其它</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="Group" :label-width="formLabelWidth">
+
+        <el-form-item label="Paid By">
+          <el-radio-group v-model="form['Owner']">
+            <div class="owner-style">
+              <el-radio label="张秋禾">张秋禾</el-radio>
+              <el-radio label="大华">大华</el-radio>
+              <el-radio label="班长">班长</el-radio>
+            </div>
+          </el-radio-group>
+        </el-form-item>
+
+        <el-form-item label="Paid For">
           <el-button
             @click="groupClick(form)"
             size="small"
@@ -196,7 +209,7 @@ const onPaidChoose = (e) => {
           </el-checkbox-group>
         </el-form-item>
 
-        <el-form-item label="Paid" :label-width="formLabelWidth">
+        <el-form-item label="Amount">
           <el-radio-group v-model="form['PaidBy']" @input="onPaidChoose">
             <el-radio label="CNY">CNY</el-radio>
             <el-radio label="USD">USD</el-radio>
@@ -204,16 +217,8 @@ const onPaidChoose = (e) => {
           </el-radio-group>
           <el-input v-model="form['Paid']" autocomplete="off" />
         </el-form-item>
-        <el-form-item label="Owner" :label-width="formLabelWidth">
-          <el-radio-group v-model="form['Owner']">
-            <div class="owner-style">
-              <el-radio label="张秋禾">张秋禾</el-radio>
-              <el-radio label="大华">大华</el-radio>
-              <el-radio label="班长">班长</el-radio>
-            </div>
-          </el-radio-group>
-        </el-form-item>
       </el-form>
+
       <div class="btn">
         <el-button
           size="small"
@@ -239,7 +244,6 @@ const onPaidChoose = (e) => {
   margin-top: -10px;
 }
 .input-value {
-  margin-left: -35px;
   margin-bottom: 30px;
 }
 .group-style {

@@ -7,8 +7,8 @@ import moment from 'moment'
 
 fx.base = 'USD'
 fx.rates = {
-  CNY: 7.26,
-  JPY: 159.68,
+  CNY: 7.16,
+  KRW: 1467.6,
   USD: 1,
 }
 
@@ -16,15 +16,13 @@ function refreshTravelBill() {
   const store = useTravelStore()
   // 账单表格
   const formatTb = {
-    张秋禾: { 大华: 0, 班长: 0 },
-    大华: { 张秋禾: 0, 班长: 0 },
-    班长: { 张秋禾: 0, 大华: 0 },
+    张秋禾: { 萧笛: 0 },
+    萧笛: { 张秋禾: 0 },
   }
   // 个人消费
   const formatEc = {
     张秋禾: 0,
-    大华: 0,
-    班长: 0,
+    萧笛: 0,
   }
 
   const d = JSON.parse(JSON.stringify(store.travelTableView))
@@ -33,10 +31,10 @@ function refreshTravelBill() {
   for (let o = 0; o < d.length; o++) {
     const cny = Number(d[o].Paid).toFixed(0)
     const usd = fx(Number(d[o].Paid)).from('USD').to('CNY').toFixed(0)
-    const jpy = fx(Number(d[o].Paid)).from('JPY').to('CNY').toFixed(0)
+    const krw = fx(Number(d[o].Paid)).from('KRW').to('CNY').toFixed(0)
     if (d[o].PaidBy === 'CNY') d[o].Paid = cny
     if (d[o].PaidBy === 'USD') d[o].Paid = usd
-    if (d[o].PaidBy === 'JPY') d[o].Paid = jpy
+    if (d[o].PaidBy === 'KRW') d[o].Paid = krw
 
     const owner = d[o].Owner
     const group = d[o].Group
@@ -74,22 +72,22 @@ export async function getTravelOrderData() {
 
     const cny = Number(data.Paid).toFixed(0)
     const usd = fx(Number(data.Paid)).from('CNY').to('USD').toFixed(0)
-    const jpy = fx(Number(data.Paid)).from('CNY').to('JPY').toFixed(0)
+    const krw = fx(Number(data.Paid)).from('CNY').to('KRW').toFixed(0)
 
     if (data.PaidBy === 'CNY') {
       data.Paid = cny
       data.PaidTableShow =
-        '🇨🇳 ' + cny + ' *' + '\n' + '🇺🇸 ' + usd + '\n' + '🇯🇵 ' + jpy
+        '🇨🇳 ' + cny + ' *' + '\n' + '🇺🇸 ' + usd + '\n' + '🇰🇷 ' + krw
     }
     if (data.PaidBy === 'USD') {
       data.Paid = usd
       data.PaidTableShow =
-        '🇨🇳 ' + cny + '\n' + '🇺🇸 ' + usd + ' *' + '\n' + '🇯🇵 ' + jpy
+        '🇨🇳 ' + cny + '\n' + '🇺🇸 ' + usd + ' *' + '\n' + '🇰🇷 ' + krw
     }
-    if (data.PaidBy === 'JPY') {
-      data.Paid = jpy
+    if (data.PaidBy === 'KRW') {
+      data.Paid = krw
       data.PaidTableShow =
-        '🇨🇳 ' + cny + '\n' + '🇺🇸 ' + usd + '\n' + '🇯🇵 ' + jpy + ' *'
+        '🇨🇳 ' + cny + '\n' + '🇺🇸 ' + usd + '\n' + '🇰🇷 ' + krw + ' *'
     }
 
     store.travelTableView[o] = data
@@ -140,7 +138,7 @@ export async function addData(tableName, form) {
 
 export async function editData(tableName, form, editID) {
   if (tableName === 'travel-order-table') {
-    await supabase.from(tableName).update([form]).eq('id', editID)
+    await supabase.from(tableName).update([form]).eq('user_id', editID)
     await supabase
       .from('travel-log')
       .insert([
@@ -152,7 +150,7 @@ export async function editData(tableName, form, editID) {
       ])
       .select()
   } else {
-    await supabase.from(tableName).update([form]).eq('id', editID)
+    await supabase.from(tableName).update([form]).eq('user_id', editID)
   }
 }
 

@@ -5,7 +5,7 @@ const isAdmin = ref(false)
 
 onMounted(() => {
   const email = JSON.parse(
-    localStorage.getItem('sb-zamyvhhsclvooccinpdk-auth-token')
+    localStorage.getItem('sb-jwhybdelwblaonsjhauy-auth-token')
   ).user.email
   if (email === 'mopjtv@gmail.com') {
     isAdmin.value = true
@@ -22,7 +22,7 @@ onMounted(() => {
       <router-link to="/budget">记日常的账 🧾</router-link>
     </div> -->
     <div class="text">
-      <router-link to="/travels/Japan">日本 Okinawa 2024.07</router-link>
+      <router-link to="/travels/Seoul">韩国 Seoul 2025.04</router-link>
     </div>
   </el-card>
 </template>

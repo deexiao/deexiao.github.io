@@ -46,7 +46,7 @@ const emit = defineEmits(['update:form'])
 
 onMounted(() => {
   const email = JSON.parse(
-    localStorage.getItem('sb-zamyvhhsclvooccinpdk-auth-token')
+    localStorage.getItem('sb-jwhybdelwblaonsjhauy-auth-token')
   ).user.email
   if (email === 'mopjtv@gmail.com') {
     isAdmin.value = true
@@ -61,7 +61,7 @@ const addDialog = () => {
   controlButton.value = 'Add'
   let newObj = {}
   for (let o in props.form) {
-    if (o === 'id') continue
+    if (o === 'user_id') continue
     if (o === 'Group') {
       newObj[o] = []
     } else {
@@ -76,7 +76,7 @@ const addDialog = () => {
 const groupButtonName = ref('全选')
 const handleRowClick = (row) => {
   if (isAdmin.value) {
-    editID.value = row.id
+    editID.value = row.user_id
     dialog.value = true
     const tempRow = JSON.parse(JSON.stringify(row))
     tempRow.Date = '2023-' + tempRow.Date

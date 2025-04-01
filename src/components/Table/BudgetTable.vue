@@ -46,7 +46,10 @@ const deleteRow = async (index) => {
   ElMessageBox.confirm('Do you want to submit?')
     .then(async () => {
       const deleteRow = props.tableData.splice(index, 1)
-      await supabase.from(props.tableName).delete().eq('id', deleteRow[0].id)
+      await supabase
+        .from(props.tableName)
+        .delete()
+        .eq('user_id', deleteRow[0].user_id)
       getData()
     })
     .catch(() => {

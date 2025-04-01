@@ -7,8 +7,7 @@ const store = useTravelStore()
   <el-table :data="store.travelBillTable" style="width: 100%" border stripe>
     <el-table-column prop="name" label="" />
     <el-table-column prop="张秋禾" label="张秋禾(欠)" />
-    <el-table-column prop="大华" label="大华(欠)" />
-    <el-table-column prop="班长" label="班长(欠)" />
+    <el-table-column prop="萧笛" label="萧笛(欠)" />
   </el-table>
 
   <el-card style="margin-top: 20px">
@@ -22,8 +21,7 @@ const store = useTravelStore()
       style="--el-table-border-color: none"
     >
       <el-table-column prop="张秋禾" label="张秋禾" />
-      <el-table-column prop="大华" label="大华" />
-      <el-table-column prop="班长" label="班长" />
+      <el-table-column prop="萧笛" label="萧笛" />
     </el-table>
   </el-card>
 </template>

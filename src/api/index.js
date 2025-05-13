@@ -77,17 +77,17 @@ export async function getTravelOrderData() {
     if (data.PaidBy === 'CNY') {
       data.Paid = cny
       data.PaidTableShow =
-        '🇨🇳 ' + cny + ' *' + '\n' + '🇺🇸 ' + usd + '\n' + '🇰🇷 ' + jpy
+        '🇨🇳 ' + cny + ' *' + '\n' + '🇺🇸 ' + usd + '\n' + '🇯🇵 ' + jpy
     }
     if (data.PaidBy === 'USD') {
       data.Paid = usd
       data.PaidTableShow =
-        '🇨🇳 ' + cny + '\n' + '🇺🇸 ' + usd + ' *' + '\n' + '🇰🇷 ' + jpy
+        '🇨🇳 ' + cny + '\n' + '🇺🇸 ' + usd + ' *' + '\n' + '🇯🇵 ' + jpy
     }
     if (data.PaidBy === 'JPY') {
       data.Paid = jpy
       data.PaidTableShow =
-        '🇨🇳 ' + cny + '\n' + '🇺🇸 ' + usd + '\n' + '🇰🇷 ' + jpy + ' *'
+        '🇨🇳 ' + cny + '\n' + '🇺🇸 ' + usd + '\n' + '🇯🇵 ' + jpy + ' *'
     }
 
     store.travelTableView[o] = data

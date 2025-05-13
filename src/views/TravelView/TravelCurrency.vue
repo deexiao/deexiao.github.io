@@ -4,21 +4,21 @@ import { fx } from 'money'
 
 fx.base = 'USD'
 fx.rates = {
-  CNY: 7.16,
-  KRW: 1467.6,
+  CNY: 7.2,
+  JPY: 147.84,
   USD: 1,
 }
 
 const numCNY = ref()
 const numUSD = ref()
-const numKRW = ref()
+const numJPY = ref()
 
 const handleChangeCNY = (value) => {
   if (!value) {
     onClear()
   } else {
     numUSD.value = fx(value).from('CNY').to('USD')
-    numKRW.value = fx(value).from('CNY').to('KRW')
+    numJPY.value = fx(value).from('CNY').to('JPY')
   }
 }
 const handleChangeUSD = (value) => {
@@ -26,21 +26,21 @@ const handleChangeUSD = (value) => {
     onClear()
   } else {
     numCNY.value = fx(value).from('USD').to('CNY')
-    numKRW.value = fx(value).from('USD').to('KRW')
+    numJPY.value = fx(value).from('USD').to('JPY')
   }
 }
-const handleChangeKRW = (value) => {
+const handleChangeJPY = (value) => {
   if (!value) {
     onClear()
   } else {
-    numCNY.value = fx(value).from('KRW').to('CNY')
-    numUSD.value = fx(value).from('KRW').to('USD')
+    numCNY.value = fx(value).from('JPY').to('CNY')
+    numUSD.value = fx(value).from('JPY').to('USD')
   }
 }
 const onClear = () => {
   numCNY.value = null
   numUSD.value = null
-  numKRW.value = null
+  numJPY.value = null
 }
 </script>
 
@@ -71,10 +71,10 @@ const onClear = () => {
         />
       </p>
       <p class="p-class">
-        韩元
+        日元
         <el-input-number
-          v-model="numKRW"
-          @input="handleChangeKRW"
+          v-model="numJPY"
+          @input="handleChangeJPY"
           class="input-number"
         />
       </p>

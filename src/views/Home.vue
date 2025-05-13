@@ -22,7 +22,7 @@ onMounted(() => {
       <router-link to="/budget">记日常的账 🧾</router-link>
     </div> -->
     <div class="text">
-      <router-link to="/travels/Seoul">韩国 Seoul 2025.04</router-link>
+      <router-link to="/travels/Seoul">日本 2025.05</router-link>
     </div>
   </el-card>
 </template>

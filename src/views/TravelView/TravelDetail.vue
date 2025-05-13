@@ -47,7 +47,7 @@ const renderResize = () => {
     @tab-click="handleClick"
     :tab-position="activeName"
   >
-    <el-tab-pane label="韩国记账">
+    <el-tab-pane label="日本记账">
       <TravelTable
         :tableData="store.travelTableView"
         :echartsData="store.budgetEchartsData"

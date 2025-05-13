@@ -102,6 +102,7 @@ export async function getTravelData() {
   const { data } = await supabase.from('travel-table').select()
   store.pageLoading = false
   store.travelTable = data
+  //sss
 }
 
 export async function getTravelLog() {

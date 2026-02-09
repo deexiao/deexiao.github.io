@@ -4,21 +4,21 @@ import { fx } from 'money'
 
 fx.base = 'USD'
 fx.rates = {
-  CNY: 7.2,
-  JPY: 147.84,
+  CNY: 6.92,
+  JPY: 58.5,
   USD: 1,
 }
 
 const numCNY = ref()
 const numUSD = ref()
-const numJPY = ref()
+const numPHP = ref()
 
 const handleChangeCNY = (value) => {
   if (!value) {
     onClear()
   } else {
     numUSD.value = fx(value).from('CNY').to('USD')
-    numJPY.value = fx(value).from('CNY').to('JPY')
+    numPHP.value = fx(value).from('CNY').to('JPY')
   }
 }
 const handleChangeUSD = (value) => {
@@ -26,10 +26,10 @@ const handleChangeUSD = (value) => {
     onClear()
   } else {
     numCNY.value = fx(value).from('USD').to('CNY')
-    numJPY.value = fx(value).from('USD').to('JPY')
+    numPHP.value = fx(value).from('USD').to('JPY')
   }
 }
-const handleChangeJPY = (value) => {
+const handleChangePHP = (value) => {
   if (!value) {
     onClear()
   } else {
@@ -40,7 +40,7 @@ const handleChangeJPY = (value) => {
 const onClear = () => {
   numCNY.value = null
   numUSD.value = null
-  numJPY.value = null
+  numPHP.value = null
 }
 </script>
 
@@ -71,10 +71,10 @@ const onClear = () => {
         />
       </p>
       <p class="p-class">
-        日元
+        比索
         <el-input-number
-          v-model="numJPY"
-          @input="handleChangeJPY"
+          v-model="numPHP"
+          @input="handleChangePHP"
           class="input-number"
         />
       </p>

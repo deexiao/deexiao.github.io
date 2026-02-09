@@ -7,8 +7,8 @@ import moment from 'moment'
 
 fx.base = 'USD'
 fx.rates = {
-  CNY: 7.2,
-  JPY: 147.84,
+  CNY: 6.92,
+  JPY: 58.5,
   USD: 1,
 }
 
@@ -16,12 +16,12 @@ function refreshTravelBill() {
   const store = useTravelStore()
   // 账单表格
   const formatTb = {
-    萧岗: { 萧笛: 0 },
-    萧笛: { 萧岗: 0 },
+    张秋禾: { 萧笛: 0 },
+    萧笛: { 张秋禾: 0 },
   }
   // 个人消费
   const formatEc = {
-    萧岗: 0,
+    张秋禾: 0,
     萧笛: 0,
   }
 
@@ -77,17 +77,17 @@ export async function getTravelOrderData() {
     if (data.PaidBy === 'CNY') {
       data.Paid = cny
       data.PaidTableShow =
-        '🇨🇳 ' + cny + ' *' + '\n' + '🇺🇸 ' + usd + '\n' + '🇯🇵 ' + jpy
+        '🇨🇳 ' + cny + ' *' + '\n' + '🇺🇸 ' + usd + '\n' + '🇵🇭 ' + jpy
     }
     if (data.PaidBy === 'USD') {
       data.Paid = usd
       data.PaidTableShow =
-        '🇨🇳 ' + cny + '\n' + '🇺🇸 ' + usd + ' *' + '\n' + '🇯🇵 ' + jpy
+        '🇨🇳 ' + cny + '\n' + '🇺🇸 ' + usd + ' *' + '\n' + '🇵🇭 ' + jpy
     }
     if (data.PaidBy === 'JPY') {
       data.Paid = jpy
       data.PaidTableShow =
-        '🇨🇳 ' + cny + '\n' + '🇺🇸 ' + usd + '\n' + '🇯🇵 ' + jpy + ' *'
+        '🇨🇳 ' + cny + '\n' + '🇺🇸 ' + usd + '\n' + '🇵🇭 ' + jpy + ' *'
     }
 
     store.travelTableView[o] = data

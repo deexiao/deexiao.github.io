@@ -8,8 +8,8 @@ import moment from 'moment'
 
 fx.base = 'USD'
 fx.rates = {
-  CNY: 7.2,
-  JPY: 147.84,
+  CNY: 6.92,
+  JPY: 58.5,
   USD: 1,
 }
 const drawerRef = ref()
@@ -131,7 +131,7 @@ const groupClick = (form) => {
     delete form.Group
     emit('update:groupButtonName', '全选')
   } else {
-    form['Group'] = ['萧岗', '萧笛']
+    form['Group'] = ['张秋禾', '萧笛']
     emit('update:groupButtonName', '清空')
   }
 }
@@ -191,7 +191,7 @@ const onPaidChoose = (e) => {
         <el-form-item label="Paid By">
           <el-radio-group v-model="form['Owner']">
             <div class="owner-style">
-              <el-radio label="萧岗">萧岗</el-radio>
+              <el-radio label="张秋禾">张秋禾</el-radio>
               <el-radio label="萧笛">萧笛</el-radio>
             </div>
           </el-radio-group>
@@ -205,7 +205,7 @@ const onPaidChoose = (e) => {
             >{{ props.groupButtonName }}</el-button
           >
           <el-checkbox-group v-model="form['Group']" class="group-style">
-            <el-checkbox label="萧岗" name="type" />
+            <el-checkbox label="张秋禾" name="type" />
             <el-checkbox label="萧笛" name="type" />
           </el-checkbox-group>
         </el-form-item>
@@ -214,7 +214,7 @@ const onPaidChoose = (e) => {
           <el-radio-group v-model="form['PaidBy']" @input="onPaidChoose">
             <el-radio label="CNY">CNY</el-radio>
             <el-radio label="USD">USD</el-radio>
-            <el-radio label="JPY">JPY</el-radio>
+            <el-radio label="JPY">PHP</el-radio>
           </el-radio-group>
           <el-input v-model="form['Paid']" autocomplete="off" />
         </el-form-item>

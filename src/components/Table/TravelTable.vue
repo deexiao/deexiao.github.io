@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import TravelDrawer from '~/components/Drawer/TravelDrawer.vue'
 import { use } from 'echarts/core'
 import { CanvasRenderer } from 'echarts/renderers'
@@ -79,7 +79,7 @@ const handleRowClick = (row) => {
     editID.value = row.user_id
     dialog.value = true
     const tempRow = JSON.parse(JSON.stringify(row))
-    tempRow.Date = '2023-' + tempRow.Date
+    tempRow.Date = '2026-' + tempRow.Date
     emit('update:form', tempRow)
     if (tempRow.Group.length === 4) {
       groupButtonName.value = '清空'

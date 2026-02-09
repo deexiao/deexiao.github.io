@@ -1,10 +1,11 @@
 <script setup>
-import { ref } from 'vue'
+import { ref,watch } from 'vue'
 import { addData, editData, getData } from '~/api'
 import { supabase } from '~/lib/supabaseClient'
 import { fx } from 'money'
 import { checkboxGroupEmits } from 'element-plus'
 import moment from 'moment'
+import { changeGlobalNodesTarget } from 'element-plus/es/utils/index.mjs'
 
 fx.base = 'USD'
 fx.rates = {
@@ -12,6 +13,7 @@ fx.rates = {
   JPY: 58.5,
   USD: 1,
 }
+
 const drawerRef = ref()
 const loading = ref(false)
 
@@ -29,6 +31,15 @@ const props = defineProps([
   'editID',
   'tableData',
 ])
+
+// watch(
+//   () => props.dialog,
+//   (val) => {
+//     if (val && props.controlButton === 'Edit' && props.form.Date) {
+//       props.form.Date = moment(props.form.Date).format('YYYY-MM-DD')
+//     }
+//   }
+// )
 
 const handleSubmit = () => {
   if (loading.value) return

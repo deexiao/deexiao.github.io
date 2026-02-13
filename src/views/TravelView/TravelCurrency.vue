@@ -5,7 +5,7 @@ import { fx } from 'money'
 fx.base = 'USD'
 fx.rates = {
   CNY: 6.92,
-  JPY: 58.5,
+  PHP: 58.5,
   USD: 1,
 }
 
@@ -18,7 +18,7 @@ const handleChangeCNY = (value) => {
     onClear()
   } else {
     numUSD.value = fx(value).from('CNY').to('USD')
-    numPHP.value = fx(value).from('CNY').to('JPY')
+    numPHP.value = fx(value).from('CNY').to('PHP')
   }
 }
 const handleChangeUSD = (value) => {
@@ -26,15 +26,15 @@ const handleChangeUSD = (value) => {
     onClear()
   } else {
     numCNY.value = fx(value).from('USD').to('CNY')
-    numPHP.value = fx(value).from('USD').to('JPY')
+    numPHP.value = fx(value).from('USD').to('PHP')
   }
 }
 const handleChangePHP = (value) => {
   if (!value) {
     onClear()
   } else {
-    numCNY.value = fx(value).from('JPY').to('CNY')
-    numUSD.value = fx(value).from('JPY').to('USD')
+    numCNY.value = fx(value).from('PHP').to('CNY')
+    numUSD.value = fx(value).from('PHP').to('USD')
   }
 }
 const onClear = () => {

@@ -1,16 +1,15 @@
 <script setup>
-import { ref,watch } from 'vue'
+import { ref } from 'vue'
 import { addData, editData, getData } from '~/api'
 import { supabase } from '~/lib/supabaseClient'
 import { fx } from 'money'
 import { checkboxGroupEmits } from 'element-plus'
 import moment from 'moment'
-import { changeGlobalNodesTarget } from 'element-plus/es/utils/index.mjs'
 
 fx.base = 'USD'
 fx.rates = {
   CNY: 6.92,
-  JPY: 58.5,
+  PHP: 58.5,
   USD: 1,
 }
 
@@ -64,9 +63,9 @@ const handleSubmit = () => {
     form.Paid = fx(form.Paid).from('USD').to('CNY')
     form.PaidBy = 'USD'
   }
-  if (props.form.PaidBy === 'JPY') {
-    form.Paid = fx(form.Paid).from('JPY').to('CNY')
-    form.PaidBy = 'JPY'
+  if (props.form.PaidBy === 'PHP') {
+    form.Paid = fx(form.Paid).from('PHP').to('CNY')
+    form.PaidBy = 'PHP'
   }
 
   if (
@@ -92,7 +91,7 @@ const handleSubmit = () => {
       drawerRef.value.close()
       emit('update:dialog', false)
       emit('updatePageData')
-      getData('Indonesia')
+      getData('travelPlace')
     })
     .catch((e) => {
       // catch error
@@ -126,7 +125,7 @@ const handleDelete = async () => {
       drawerRef.value.close()
       emit('update:dialog', false)
       emit('updatePageData')
-      getData('Indonesia')
+      getData('travelPlace')
     })
     .catch((e) => {
       // catch error
@@ -225,7 +224,7 @@ const onPaidChoose = (e) => {
           <el-radio-group v-model="form['PaidBy']" @input="onPaidChoose">
             <el-radio label="CNY">CNY</el-radio>
             <el-radio label="USD">USD</el-radio>
-            <el-radio label="JPY">PHP</el-radio>
+            <el-radio label="PHP">PHP</el-radio>
           </el-radio-group>
           <el-input v-model="form['Paid']" autocomplete="off" />
         </el-form-item>

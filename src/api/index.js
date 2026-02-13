@@ -1,5 +1,4 @@
 import { supabase } from '~/lib/supabaseClient'
-import { useBudgetStore } from '~/store/budgetStore.js'
 import { useTravelStore } from '~/store/travelStore.js'
 import _ from 'lodash'
 import { fx } from 'money'
@@ -8,7 +7,7 @@ import moment from 'moment'
 fx.base = 'USD'
 fx.rates = {
   CNY: 6.92,
-  JPY: 58.5,
+  PHP: 58.5,
   USD: 1,
 }
 
@@ -31,10 +30,10 @@ function refreshTravelBill() {
   for (let o = 0; o < d.length; o++) {
     const cny = Number(d[o].Paid).toFixed(0)
     const usd = fx(Number(d[o].Paid)).from('USD').to('CNY').toFixed(0)
-    const jpy = fx(Number(d[o].Paid)).from('JPY').to('CNY').toFixed(0)
+    const obj = fx(Number(d[o].Paid)).from('PHP').to('CNY').toFixed(0)
     if (d[o].PaidBy === 'CNY') d[o].Paid = cny
     if (d[o].PaidBy === 'USD') d[o].Paid = usd
-    if (d[o].PaidBy === 'JPY') d[o].Paid = jpy
+    if (d[o].PaidBy === 'PHP') d[o].Paid = obj
 
     const owner = d[o].Owner
     const group = d[o].Group
@@ -72,22 +71,22 @@ export async function getTravelOrderData() {
 
     const cny = Number(data.Paid).toFixed(0)
     const usd = fx(Number(data.Paid)).from('CNY').to('USD').toFixed(0)
-    const jpy = fx(Number(data.Paid)).from('CNY').to('JPY').toFixed(0)
+    const obj = fx(Number(data.Paid)).from('CNY').to('PHP').toFixed(0)
 
     if (data.PaidBy === 'CNY') {
       data.Paid = cny
       data.PaidTableShow =
-        '🇨🇳 ' + cny + ' *' + '\n' + '🇺🇸 ' + usd + '\n' + '🇵🇭 ' + jpy
+        '🇨🇳 ' + cny + ' *' + '\n' + '🇺🇸 ' + usd + '\n' + '🇵🇭 ' + obj
     }
     if (data.PaidBy === 'USD') {
       data.Paid = usd
       data.PaidTableShow =
-        '🇨🇳 ' + cny + '\n' + '🇺🇸 ' + usd + ' *' + '\n' + '🇵🇭 ' + jpy
+        '🇨🇳 ' + cny + '\n' + '🇺🇸 ' + usd + ' *' + '\n' + '🇵🇭 ' + obj
     }
-    if (data.PaidBy === 'JPY') {
-      data.Paid = jpy
+    if (data.PaidBy === 'PHP') {
+      data.Paid = obj
       data.PaidTableShow =
-        '🇨🇳 ' + cny + '\n' + '🇺🇸 ' + usd + '\n' + '🇵🇭 ' + jpy + ' *'
+        '🇨🇳 ' + cny + '\n' + '🇺🇸 ' + usd + '\n' + '🇵🇭 ' + obj + ' *'
     }
 
     store.travelTableView[o] = data
@@ -157,105 +156,10 @@ export async function editData(tableName, form, editID) {
 
 export async function getData(tab) {
   switch (tab) {
-    case '每月定期支出':
-      getBudgetData()
-      break
-    case '买菜开销':
-      getFoodData()
-      break
-    case 'Indonesia':
+    case 'travelPlace':
       await getTravelOrderData()
       break
     default:
-      getBudgetData()
-      getFoodData()
       break
-  }
-}
-
-export async function getBudgetData(tableName) {
-  const store = useBudgetStore()
-
-  const { data } = await supabase.from('budget-table').select()
-
-  store.budgetTable = data
-  store.budgetTableEcharts = []
-  store.monthPriceAll = data.reduce((n, { Price }) => n + Price, 0)
-
-  for (let o = 0; o < data.length; o++) {
-    let obj = {}
-    obj.name = data[o].Name
-    obj.value = data[o].Price
-    store.budgetTableEcharts[o] = obj
-  }
-  store.budgetEchartsData = {
-    tooltip: {
-      trigger: 'item',
-      formatter: '{a} <br/>{b} : {c} ({d}%)',
-    },
-    series: [
-      {
-        name: 'Traffic Sources',
-        type: 'pie',
-        radius: '55%',
-        center: ['50%', '60%'],
-        data: store.budgetTableEcharts,
-        emphasis: {
-          itemStyle: {
-            shadowBlur: 10,
-            shadowOffsetX: 0,
-            shadowColor: 'rgba(0, 0, 0, 0.5)',
-          },
-        },
-      },
-    ],
-  }
-}
-
-export async function getFoodData(tableName) {
-  const store = useBudgetStore()
-
-  const { data } = await supabase.from('food-table').select()
-
-  store.foodTable = data
-  store.foodTableEcharts = []
-  store.foodPriceAll = data.reduce((n, { Price }) => n + Price, 0)
-
-  for (let o = 0; o < data.length; o++) {
-    let obj = {}
-    obj.name = data[o].Name
-    obj.value = data[o].Price
-    store.foodTableEcharts[o] = obj
-  }
-  const arr = store.foodTableEcharts.reduce(function (accumulator, cur) {
-    const name = cur.name,
-      found = accumulator.find(function (elem) {
-        return elem.name == name
-      })
-    if (found) found.value += cur.value
-    else accumulator.push(cur)
-    return accumulator
-  }, [])
-  store.foodEchartsData = {
-    tooltip: {
-      trigger: 'item',
-      formatter: '{a} <br/>{b} : {c} ({d}%)',
-    },
-    series: [
-      {
-        name: 'Traffic Sources',
-        type: 'pie',
-        radius: '55%',
-        center: ['50%', '60%'],
-        data: arr,
-        emphasis: {
-          itemStyle: {
-            shadowBlur: 10,
-            shadowOffsetX: 0,
-            shadowColor: 'rgba(0, 0, 0, 0.5)',
-          },
-        },
-      },
-    ],
   }
 }

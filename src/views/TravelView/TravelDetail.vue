@@ -9,17 +9,17 @@ import TravelLog from '~/views/TravelView/TravelLog.vue'
 
 const store = useTravelStore()
 const activeName = ref('left')
-const selectedTab = ref('Indonesia')
+const selectedTab = ref('travelPlace')
 const isMobileScreen = ref(false)
 
 watchEffect(async () => {
   store.currTab = selectedTab.value
-  await getData('Indonesia')
+  await getData('travelPlace')
 })
 
 const handleClick = (tab, event) => {
   selectedTab.value = store.currTab
-  getData('Indonesia')
+  getData('travelPlace')
 }
 
 onBeforeMount(() => {

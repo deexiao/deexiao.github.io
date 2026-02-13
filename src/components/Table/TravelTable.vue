@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted } from 'vue'
 import TravelDrawer from '~/components/Drawer/TravelDrawer.vue'
 import { use } from 'echarts/core'
 import { CanvasRenderer } from 'echarts/renderers'
@@ -121,7 +121,7 @@ const handleRowClick = (row) => {
   </el-affix>
 
   <TravelDrawer
-    @updatePageData="getData('Indonesia')"
+    @updatePageData="getData('travelPlace')"
     :tableName="props.tableName"
     :controlButton="controlButton"
     :editID="editID"
